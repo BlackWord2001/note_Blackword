@@ -1,22 +1,22 @@
-+ ## <b>配置Git</b>
----
+ + ## <b>配置Git</b>
+
 设置名称和邮箱  
 `git config --global user.name "名称"`  
 `git config --global user.email 邮箱 `  
 添加一个远程仓库地址链接  
 ` git remote add origin https://地址 `
-***
- ## <b>Git基本命令</b>
----
+
+ + ## <b>Git基本命令</b>
+
   <b>克隆</b>   
    ` git clone 仓库地址 `  
 
   <b>克隆指定分支</b>   
   ` git clone -b 分支名称 仓库地址 `   
    >-b：这是branch的简写，代表分支的意思；
----
+
 + ## <b>添加上传</b>
----
+
 初始化仓库  
 `git init`
 
@@ -35,11 +35,13 @@
 
 <b>推送上传至网盘</b>  
 ` git push -u origin main `
-> main代表主分支名称
+> main代表主分支名称  
 
----
+` git push `
+
+
 + ## <b>分支</b>
----
+
 创建分支  
 ` git branch 分支名称 `  
 
