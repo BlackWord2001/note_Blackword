@@ -26,6 +26,9 @@
 将添加目录下所有文件加入暂存区  
 ` git add . `
 
+查看暂存区的文件  
+` git ls-files ` 
+
 将暂存区提交到本地仓库  
 `git commit`  
 ` git commit -m "提交内容" `
@@ -33,7 +36,7 @@
 查看日志  
 ` git log `
 
-<b>推送上传至网盘</b>  
+<b>推送至网盘</b>  
 ` git push -u origin main `
 > main代表主分支名称  
 
