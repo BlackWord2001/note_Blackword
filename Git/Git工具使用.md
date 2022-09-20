@@ -29,6 +29,9 @@
 查看暂存区的文件  
 ` git ls-files ` 
 
+删除暂存区文件  
+` git rm --cached <file> `
+
 将暂存区提交到本地仓库  
 `git commit`  
 ` git commit -m "提交内容" `
