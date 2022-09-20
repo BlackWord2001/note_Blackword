@@ -22,4 +22,8 @@
 ` git add . `
 
 提交  
-`git commit`
+`git commit`  
+` git commit -m "提交内容" `
+
+查看日志  
+` git log `
