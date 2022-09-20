@@ -45,6 +45,9 @@
 
 ` git push `
 
+拉取  
+` git pull `
+
 
 + ## <b>分支</b>
 
