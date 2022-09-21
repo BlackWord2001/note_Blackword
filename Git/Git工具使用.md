@@ -70,3 +70,8 @@
 
 合并分支  
 ` git merge 分支名称 `
+
++ ## 回退版本
+
+回退到某个暂存区版本  
+`git reset --hard 91a90dbd831a31646c0f0eac897d470e81d53e7f`
