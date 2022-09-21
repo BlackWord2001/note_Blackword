@@ -47,12 +47,17 @@
 
 拉取  
 ` git pull `
+> 如果拉取遇到错误，可以先将当前的内容存储起来，`git stash`就可以把当前内容存储在栈内
+> `git stash list` 可以查看临时存储栈内的列表
 
 
 + ## <b>分支</b>
 
 创建分支  
 ` git branch 分支名称 `  
+
+查看所有分支  
+` git branch `
 
 创建分支并设置为主分支
 ` git branch -M 分支名称 `
