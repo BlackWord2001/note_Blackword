@@ -1,6 +1,6 @@
 # Blender使用笔记
 
-+ ## 着色器编辑器(Shader Editor)快捷键
+## 着色器编辑器(Shader Editor)快捷键
 > 部分功能需要使用`node Wrangler`插件。 
 > LMB(鼠标左键)，RMB(鼠标右键)，MMB（鼠标中键）
 

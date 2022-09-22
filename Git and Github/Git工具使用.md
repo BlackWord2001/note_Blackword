@@ -1,4 +1,4 @@
- + ## <b>配置Git</b>
+## <b>配置Git</b>
 
 设置名称和邮箱  
 `git config --global user.name "名称"`  
@@ -6,7 +6,7 @@
 添加一个远程仓库地址链接  
 ` git remote add origin https://地址 `
 
- + ## <b>Git基本命令</b>
+## <b>Git基本命令</b>
 
   <b>克隆</b>   
    ` git clone 仓库地址 `  
@@ -15,7 +15,7 @@
   ` git clone -b 分支名称 仓库地址 `   
    >-b：这是branch的简写，代表分支的意思；
 
-+ ## <b>添加上传</b>
+## <b>添加上传</b>
 
 初始化仓库  
 `git init`
@@ -51,7 +51,7 @@
 > `git stash list` 可以查看临时存储栈内的列表
 
 
-+ ## <b>分支</b>
+## <b>分支</b>
 
 创建分支  
 ` git branch 分支名称 `  
@@ -71,7 +71,12 @@
 合并分支  
 ` git merge 分支名称 `
 
-+ ## 回退版本
+## 撤销修改
+  撤销之前所有的 `git add` 操作   
+`git reset`
+
+撤销指定文件的 `git add` 操作  
+`git reset 文件名`
 
 回退到某个暂存区版本  
 `git reset --hard 91a90dbd831a31646c0f0eac897d470e81d53e7f`
