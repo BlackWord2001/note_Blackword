@@ -14,7 +14,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/lib/glfw/include
     ${PROJECT_SOURCE_DIR}/include)
 
-#源码目录 保存到名为"SRC_FILES"
+#源码目录 保存到名为"SRC_FILES"的变量
 file(GLOB SRC_FILES
     ${PROJECT_SOURCE_DIR}/lib/glad/src/*.c
     ${PROJECT_SOURCE_DIR}/src/*.cpp)
