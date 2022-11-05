@@ -1,6 +1,11 @@
 ## 压缩转换
-简单压缩转换（视频，图片都有效）<br>
+简单压缩转换（视频，图片都有效） <br>
 `ffmpeg -i input.mkv output.mp4`
+
+序列帧转视频 <br>
+`ffmpeg -f image2 -i ./tmp/%04d.png movie.mp4`
++ image2 表示输入或输出文件的格式是image2格式
++ -f 是 format 格式的意思
 
 ## 剪辑
 简单裁剪视频<br>
