@@ -1,2 +1,13 @@
-查看当前文件目录的树形图    
-`tree`
+# Linux
+
+### 基础指令
+|指令|效果|
+|:-|:-
+|`mkdir`|创建文件夹
+|`tree`|查看当前文件目录的树形图
+|`cp`|复制文件
+|`realpath`|查看文件路径
+
+### 解压缩文件
++ 压缩指定文件夹 <br>
+`tar -zcvf filename.tar.gz dir filename`
