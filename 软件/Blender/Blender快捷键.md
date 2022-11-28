@@ -15,7 +15,8 @@
 |`Shift` + `+`|对齐节点
 |`Ctrl`+`J`|为节点添加边框
 |`Alt`+`P`|从框中移除
-|`Ctrl`+`Shift`+`RMB`|预览当前节点
+|`Ctrl`+`Shift`+`RMB`|创建混合节点
+|`Ctrl`+`Shift`+`LMB`|预览当前节点
 |`Ctrl`+`T`|生成纹理坐标及映射并自动链接
 |`Alt`+`Shift`+`RMB`|连接节点
 |`Alt`+`RMB`|快速连接节点
