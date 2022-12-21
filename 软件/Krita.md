@@ -4,10 +4,9 @@
 
 |按键|作用
 |:-|:-
-|`Shift`+`S`|打开吸附菜单
-|`M`|镜像
-|`Ctrl`+`T`|变换工具
-
+|<kbd>Shift</kbd>+<kbd>S</kbd>|打开吸附菜单
+|<kbd>M|镜像
+|<kbd>Ctrl</kbd>+<kbd>T</kbd>|变换工具
 ## 插件推荐
 
 ### UI Redesign
