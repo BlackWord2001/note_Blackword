@@ -73,3 +73,14 @@ excellent
 <a href="#table1">跳转到 Table-1</a>
 
 <a href="#table2">跳转到 Table-2</a>
+
+
+```mermaid
+graph TD
+subgraph selector 版
+thread --> selector
+selector --> c1(channel)
+selector --> c2(channel)
+selector --> c3(channel)
+end
+```
