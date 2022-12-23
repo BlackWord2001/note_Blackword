@@ -11,9 +11,14 @@
     + 项目名/include/项目名/模块名.h
     + 项目名/src/模块名.cpp
 
-> 推荐使用`target_include_directories`而不是`include_directories`
+推荐使用`target_include_directories`而不是`include_directories`
+`include_directories(header-dir)` 是一个全局包含，向下传递。
+什么意思呢？就是说如果某个目录的 CMakeLists.txt 中使用了该指令，
+其下所有的子目录默认也包含了header-dir 目录。
 
 
+
+**实列**
 ``` cmake
 #设置CMake最低版本号
 cmake_minimum_required(VERSION 3.20)
