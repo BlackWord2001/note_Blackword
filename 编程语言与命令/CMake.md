@@ -1,5 +1,19 @@
 # CMake笔记
 
+**VSCode: CMake Tools** <br>
+> cmake tools插件不需要配置launch.json就能调试
+
+<kbd>SHIFT</kbd> + <kbd>F5</kbd> 运行但不调试 <br>
+<kbd>Ctrl</kbd> + <kbd>F5</kbd> 调试并运行
+
+### C++项目目录组织方式
++ 文件结构
+    + 项目名/include/项目名/模块名.h
+    + 项目名/src/模块名.cpp
+
+> 推荐使用`target_include_directories`而不是`include_directories`
+
+
 ``` cmake
 #设置CMake最低版本号
 cmake_minimum_required(VERSION 3.20)
