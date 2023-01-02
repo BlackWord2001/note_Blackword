@@ -46,7 +46,7 @@ quit或exit                          // 退出
 
 5. [Quit]
 > EFI文件系统 512M   
-    linux swap 大于512N   
+    linux swap 大于512M   
     根目录使用剩余空间
 
 对各个分区进行格式化和挂载
@@ -124,7 +124,7 @@ LANG=en_US.UTF8
 
 `grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB`生成GRUB EFI
 
-`grub-mkconfig -o /boot/grub/grub.cfg`
+`grub-mkconfig -o /boot/grub/grub.cfg` 生成grub.cfg文件
 
 笔记本电脑需要安装的工具<br>
 `pacman -S iw wpa_supplicant dialog netctl`

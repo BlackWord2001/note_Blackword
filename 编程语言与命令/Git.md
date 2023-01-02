@@ -101,3 +101,17 @@
 
 /build/   #忽略build下所有的文件
 ```
+
+设置代理
+```
+# 设置http:
+git config --global http.proxy http://127.0.0.1:1080
+# 设置https:
+git config --global https.proxy https://127.0.0.1:1080
+# 设置socks:
+git config --global http.proxy 'socks5://127.0.0.1:1080'
+git config --global https.proxy 'socks5://127.0.0.1:1080'
+## 取消
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
