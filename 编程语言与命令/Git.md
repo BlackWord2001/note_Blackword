@@ -1,4 +1,4 @@
-## <b>配置Git</b>
+## <b>Git基本设置</b>
 
 设置名称和邮箱  
 `git config --global user.name "名称"`  
@@ -16,6 +16,8 @@
    >-b：这是branch的简写，代表分支的意思；
 
 ## <b>拉取 推送 查看</b>
+查看远程仓库  
+`git remote -v`
 
 初始化仓库  
 `git init`
@@ -62,22 +64,30 @@
 ## <b>分支</b>
 
 创建分支  
-` git branch 分支名称 `  
+` git branch [分支名称] `  
+`git checkout -b [分支名称]` → 创建新分支并立即切换过来,一步到位.
 
 查看所有分支  
-` git branch `
+` git branch ` → 本地分支  
+`git branch -r` → 远程仓库分支
 
 创建分支并设置为主分支  
-` git branch -M 分支名称 `
+` git branch -M [分支名称] `
 
 切换分支  
-` git checkout 分支名称 `
+` git checkout [分支名称] `
 
 切换到主分支  
 ` git checkout master `
 
 合并分支  
-` git merge 分支名称 `
+` git merge [分支名称] `
+
+删除分支  
+`git branch -d [分支名称] ` → 删除一个分支, -d选项只能删除已经参与过合并的分支，对于未参与合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项  
+
+`git push origin --delete [分支名称]` → 删除远程分支
+
 
 ## 撤销修改
 `git reset`撤销之前所有的 `git add` 操作   
