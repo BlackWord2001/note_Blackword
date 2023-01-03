@@ -49,13 +49,12 @@
 
 
 <b>推送至网盘</b>  
-` git push -u origin main `
-> main代表主分支名称  
+` git push -u origin main ` 推送到指定分支 | main代表主分支名称  
 
-` git push `
+` git push ` 推送到当前分支
 
-拉取  
-` git pull `
+` git pull `拉取
+
 > 如果拉取遇到错误，可以先将当前的内容存储起来，`git stash`就可以把当前内容存储在栈内
 > `git stash list` 可以查看临时存储栈内的列表
 
@@ -81,14 +80,13 @@
 ` git merge 分支名称 `
 
 ## 撤销修改
-  撤销之前所有的 `git add` 操作   
-`git reset`
+`git reset`撤销之前所有的 `git add` 操作   
 
-撤销指定文件的 `git add` 操作  
-`git reset 文件名`
+`git reset 文件名`撤销指定文件的 `git add` 操作  
 
-回退到某个暂存区版本  
-`git reset --hard 91a90dbd831a31646c0f0eac897d470e81d53e7f`
+
+`git reset --hard 91a90dbd831a31646c0f0eac897d470e81d53e7f`回退到某个暂存区版本  
+
 
 ## .gitignore 文件
 设置Git忽略的文件，这些文件不参与Git库的提交与管理。
