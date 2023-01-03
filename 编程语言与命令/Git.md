@@ -67,9 +67,10 @@
 ` git branch [分支名称] `  
 `git checkout -b [分支名称]` → 创建新分支并立即切换过来,一步到位.
 
-查看所有分支  
+查看分支  
 ` git branch ` → 本地分支  
-`git branch -r` → 远程仓库分支
+`git branch -r` → 远程仓库分支  
+` git branch -a` → 所有分支  
 
 创建分支并设置为主分支  
 ` git branch -M [分支名称] `
@@ -122,4 +123,14 @@ git config --global https.proxy 'socks5://127.0.0.1:1080'
 ## 取消
 git config --global --unset http.proxy
 git config --global --unset https.proxy
+```
+
+## 常见错误
+
+### `git add .` 出现错误
+`git add .`的时候无反应提示如下↓ ，可能是你命令操作的位置不在项目根目录。
+```
+hint: Use -f if you really want to add them.
+hint: Turn this message off by running
+hint: "git config advice.addIgnoredFile false"
 ```
