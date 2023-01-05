@@ -1,3 +1,5 @@
+# git使用指南
+
 ## <b>Git基本设置</b>
 
 设置名称和邮箱  
@@ -125,12 +127,47 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
-## 常见错误
+# 常见错误
 
-### `git add .` 出现错误
+### ❌`git add .` 出现错误
 `git add .`的时候无反应提示如下↓ ，可能是你命令操作的位置不在项目根目录。
 ```
 hint: Use -f if you really want to add them.
 hint: Turn this message off by running
 hint: "git config advice.addIgnoredFile false"
+```
+
+### ❌`git pull`错误
+
+`git pull` 拉取时候出现<font color="#dd0000">The following untracked working tree files would be overwritten by merge:</font><br/> 
+
+```bash
+git clean -n
+// 是一次 clean 的演习, 告诉你哪些文件会被删除，不会真的删除
+ 
+git clean -f
+// 删除当前目录下所有没有 track 过的文件
+// 不会删除 .gitignore 文件里面指定的文件夹和文件, 不管这些文件有没有被 track 过
+ 
+git clean -f <path>
+// 删除指定路径下的没有被 track 过的文件
+ 
+git clean -df
+ 
+// 删除当前目录下没有被 track 过的文件和文件夹
+ 
+git clean -xf
+ 
+// 删除当前目录下所有没有 track 过的文件.
+// 不管是否是 .gitignore 文件里面指定的文件夹和文件
+ 
+git clean 
+// 对于刚编译过的项目也非常有用
+// 如, 他能轻易删除掉编译后生成的 .o 和 .exe 等文件`在这里插入代码片`. 这个在打包要发布一个 release 的时候非常有用
+ 
+git reset --hard
+git clean -df
+git status
+// 运行后, 工作目录和缓存区回到最近一次 commit 时候一摸一样的状态。
+// 此时建议运行 git status，会告诉你这是一个干净的工作目录, 又是一个新的开始了！
 ```
