@@ -1,6 +1,19 @@
 # OpenGL
 
+## API
 
+## 自建类
+### shader类的使用方法
+```glsl
+Shader our_shader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
+...
+while(...)
+{
+    our_shader.use();
+    our_shader.set_float("someUniform", 1.0f);
+    DrawStuff();
+}
+```
 
 ## 其他
 
