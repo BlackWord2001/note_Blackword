@@ -136,3 +136,9 @@ LANG=en_US.UTF8
 `umount -R /mnt` 手动卸载被挂载的分区
 
 `reboot`已经安装完成拔掉u盘或光驱重启即可进入系统
+
+# 推荐软件
+
+fish
+
+neovim
