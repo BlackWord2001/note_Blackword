@@ -140,5 +140,3 @@ LANG=en_US.UTF8
 # 推荐软件
 
 fish
-
-neovim

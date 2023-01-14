@@ -1,21 +1,4 @@
-# OpenGL
-
-## API
-
-## 自建类
-### shader类的使用方法
-```glsl
-Shader our_shader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
-...
-while(...)
-{
-    our_shader.use();
-    our_shader.set_float("someUniform", 1.0f);
-    DrawStuff();
-}
-```
-
-## 其他
+# 一些介绍
 
 OpenGL 4.5 在 OpenGL 3.3 的基础上增加了很多新特性。例如：
 
@@ -34,3 +17,27 @@ OpenGL 4.5 在 OpenGL 3.3 的基础上增加了很多新特性。例如：
     增强的顶点格式支持，使得 OpenGL 4.5 可以更灵活地处理不同类型的顶点数据。
 
     这些只是 OpenGl 4.5 的部分新特性，实际上还有很多其他新功能，例如对调试和优化的增强支持等。
+# OpenGL API
+
+
+# glm
+**glm::perspective**
+```
+glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
+```
+第一个参数 `glm::radians(45.0f)` 代表视野(Field of View) 数值越大视野更宽。     
+第二个参数设置了宽高比，由视口的宽除以高所得。  
+第三和第四个参数设置了平截头体的近和远平面(最近最远渲染距离)。
+
+
+# shader.h
+```glsl
+Shader ourShader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
+...
+while(...)
+{
+    ourShader.use();
+    ourShader.setFloat("someUniform", 1.0f);
+    DrawStuff();
+}
+```
