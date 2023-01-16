@@ -88,3 +88,10 @@ end
 
 常用符号
 ✅
+
+
+
+## 图片并排
+
+![image](./images/1.png) | ![image](./images/2.png)
+---|---
