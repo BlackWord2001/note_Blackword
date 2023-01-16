@@ -19,6 +19,18 @@ OpenGL 4.5 在 OpenGL 3.3 的基础上增加了很多新特性。例如：
     这些只是 OpenGl 4.5 的部分新特性，实际上还有很多其他新功能，例如对调试和优化的增强支持等。
 
 
+# shader.h
+```glsl
+Shader ourShader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
+...
+while(...)
+{
+    ourShader.use();
+    ourShader.setFloat("someUniform", 1.0f);
+    DrawStuff();
+}
+```
+
 ## glDrawArrays , glDrawElements
 
 `glDrawArrays` 和 `glDrawElements` 的作用都是从一个数据数组中提取数据渲染基本图元。
@@ -81,6 +93,16 @@ while (!glfwWindowShouldClose(main_window))
 
 ```
 
+### glUniformMatrix4fv
+我们首先查询`uniform`变量的地址，然后用有`Matrix4fv`后缀的`glUniform`函数把矩阵数据发送给着色器，第二个参数告诉OpenGL我们将要发送多少个矩阵，第三个参数询问我们是否希望对我们的矩阵进行转置(Transpose)，也就是说交换我们矩阵的行和列。OpenGL开发者通常使用一种内部矩阵布局，叫做列主序(Column-major Ordering)布局。GLM的默认布局就是列主序，所以并不需要转置矩阵，我们填`GL_FALSE`。后一个参数是真正的矩阵数据，但是GLM并不是把它们的矩阵储存为OpenGL所希望接受的那种，因此我们要先用GLM的自带的函数`value_ptr`来变换这些数据。
+
+~~~ c++
+// 变换矩阵
+glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+// 观察矩阵
+glUniformMatrix4fv(view_loc, 1, GL_FALSE, &view[0][0]);
+~~~
+> 如果已经下载了 `shader.h` 这个头文件将不用手写 `glUniformMatrix4fv` 直接使用 `ourShader.("矩阵", 矩阵);`
 
 # glm
 **glm::perspective**
@@ -92,14 +114,3 @@ glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width / (float)hei
 第三和第四个参数设置了平截头体的近和远平面(最近最远渲染距离)。
 
 
-# shader.h
-```glsl
-Shader ourShader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
-...
-while(...)
-{
-    ourShader.use();
-    ourShader.setFloat("someUniform", 1.0f);
-    DrawStuff();
-}
-```
