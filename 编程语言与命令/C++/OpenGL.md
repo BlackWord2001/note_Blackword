@@ -102,7 +102,7 @@ glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 // 观察矩阵
 glUniformMatrix4fv(view_loc, 1, GL_FALSE, &view[0][0]);
 ~~~
-> 如果已经下载了 `shader.h` 这个头文件将不用手写 `glUniformMatrix4fv` 直接使用 `ourShader.("矩阵", 矩阵);`
+> 如果已经下载了 `shader.h` 这个头文件将不用手写 `glUniformMatrix4fv` 直接使用 `ourShader.setMat4("矩阵", 矩阵);`
 
 # glm
 **glm::perspective**
