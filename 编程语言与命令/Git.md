@@ -127,6 +127,12 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
+## 合并分支
+
+合并操作建议先在master上先建立一个新的分支，如果要把其他分支合并到 master 主分支请先切换到master。  
+`git merge 分支名`
+
+
 # 常见错误
 
 ### ❌`git add .` 出现错误
