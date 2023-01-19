@@ -91,6 +91,43 @@
 
 `git push origin --delete [分支名称]` → 删除远程分支
 
+### 拉取远程分支到本地
+1. **方法一：git checkout targetbranch**
+~~~
+1）首先，获取远程所有分支
+    git fetch 
+ 
+2）查看所有远程分支，找到需要的远程分支，例如 origin/targetbranch
+    git branch -r 
+ 
+3）在本地新建一个同名分支，然后系统会自动与该远程分支关联
+    git checkout targetbranch
+~~~
+
+2. **方法二：git checkout -b 本地分支名 origin/远程分支名**
+~~~
+1）首先，获取远程所有分支
+    git fetch 
+ 
+2）创建与远程分支关联的本地分支（可以同名，也可以不同名；建议同名，方便管理）
+    git checkout -b 本地分支名 origin/远程分支名
+~~~
+
+3. **方法四：git checkout -t origin/远程分支名**
+~~~
+1）首先，获取远程所有分支
+    git fetch 
+2）创建与远程分支关联的本地分支
+    git checkout -t origin/远程分支名
+~~~
+4. **方法三：git checkout --track origin/远程分支名**
+~~~
+1）首先，获取远程所有分支
+    git fetch 
+ 
+2）创建与远程分支关联的本地分支
+    git checkout --track origin/远程分支名 
+~~~
 
 ## 撤销修改
 `git reset`撤销之前所有的 `git add` 操作   
