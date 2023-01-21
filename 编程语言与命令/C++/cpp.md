@@ -37,3 +37,17 @@ C++中的内联函数，内联函数的声明和定义分别在不同的源文�
     5、一般来说，.h里面只有声明，没有实现，而.hpp里声明实现都有，后者可以减少.cpp的数量。
     6、.h里面可以有using namespace std，而.hpp里则无。
     7、不可包含全局对象和全局函数。
+
+# 隐式的类型转换
+static_cast< 想要的类型> (原数据)
+在C++中，我们经常用到 隐式的类型 转换，比如 char->int , int ->double, 类层次结构中基类 和 派生类之间指针或引用的转换。
+编译器隐式执行的任何类型转换都可以由 static_cast显式完成。
+需要注意的是， 我们要 确保 目标数据类型 是 我们想要的类型，因为static_cast 不做 运行时的类型检查(RTTI,Run-time type identification)。
+
+输入:
+~~~c++
+double d = 1.2;
+int i= static_cast<int> (d); // 相当于 C语言的强制类型转换 (int)d;
+cout << i << endl;
+~~~
+结果输出为：1

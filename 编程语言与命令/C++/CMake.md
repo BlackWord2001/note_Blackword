@@ -34,7 +34,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/include)
 
 #源码目录 保存到名为"SRC_FILES"的变量
-file(GLOB SRC_FILES
+file(GLOB SRC_FILES CONFIGURE_ DEPENDS
     ${PROJECT_SOURCE_DIR}/lib/glad/src/*.c
     ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
@@ -47,3 +47,40 @@ add_executable(${CMAKE_PROJECT_NAME} ${SRC_FILES})
 # 连接依赖库
 target_link_libraries(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCE_DIR}/lib/glfw/lib-vc2022/glfw3.lib)
 ```
+
+# 现代CMAKE
+
+**从现在开始，如果在命令行操作cmake，请使用更方便的-B 和 --build 命令。**
+
++ `cmake -B build` 免去了先创建 build 目录再切换进去再指定源码目录的麻烦。
+
++ `cmake --build build` 统一了不同平台（linux 上会调用 make，Windows上会调用 devenv.exe）
+
+---
+
+`cmake -B build -DCMAKE_BUILD_TYPE=Release`   
+↑设置构建模式为发布模式（开启全部优化）     
+cmake -B build ← 第二次配置时没有 -D 参数，但是之前的 -D 设置的变量都会被保留
+
+## CMAKE_BUILD_TYPE构建的类型  
+CMAKE_BUILD_TYPE 是 CMake 中一个特殊变量，用于控制构建类型，他的值可以是：  
++ Debug 调试模式，完全不优化，生成调试信息，方便调试程序
++ Release 发布模式，优化程度最高，性能最佳，但是编译比Debug慢.
++ MinSizeRel最小体积发布，生成的文件比Release更小，不完全优化，减少二进制体积
++ RelWithDeblnfo带调试信息发布，生成的文件比Release更大，因为带有调试的符号信息
++ 默认情况下CMAKE_BUILD_TYPE 为空字符串，这时相当于Debug。
+
+
+
+## 自动查找文件
+使用 GLOB 自动查找当前目录下指定扩展名文件，实现批量添加源文件，但是建议加上 CONFIGURE_DEPENDS 选项，当添加新的源文件的时，自动更新变量
+
+~~~CMAKE
+add_executable(main)
+
+file(GLOB source CONFIGURE_DEPENDS *.cpp *.hpp *.c *.h)
+
+target_sources(main PUBLIC ${sources})
+~~~
+
+GLOB 也可以替换成 GLOB_RECURSE 这样就能自动包含所有子文件夹下的文件，但是 GLOB_RECURSE 也会出现把 build 目录里生成的临时.cpp文件也给加进来，当然这是有解决方案的只要把源码放在src目录下就就能解决这个问题
