@@ -18,7 +18,7 @@
 
 
 
-**实列**
+**实列: 比较老暂时还没空修改**
 ``` cmake
 #设置CMake最低版本号
 cmake_minimum_required(VERSION 3.20)
@@ -84,3 +84,11 @@ target_sources(main PUBLIC ${sources})
 ~~~
 
 GLOB 也可以替换成 GLOB_RECURSE 这样就能自动包含所有子文件夹下的文件，但是 GLOB_RECURSE 也会出现把 build 目录里生成的临时.cpp文件也给加进来，当然这是有解决方案的只要把源码放在src目录下就就能解决这个问题
+
+## PROJECT_x_DIR 和 CMAKE_CURRENT_x_DIR 的区别
+
++ `PROJECT_SOURCE_DIR` 表示最近一次调用 project 的 CMakeLists.txt 所在的源码目录。  
++ `CMAKE_CURRENT_SOURCE_DIR` 表示当前 CMakeLists.txt的源码根目录。  
++ `CMAKE_SOURCE_DIR` 表示最外层 CMakeLists.txt的源码根目录 。   
+> 利益 `PROJECT_SOURCE_DIR` 可以实现从子模块里直接获得项目最外层目录的路径。    
+不建议使用 `CMAKE_SOURCE_DIR`，那样会让你的项目无法被人作为子模块使用。
