@@ -90,5 +90,42 @@ GLOB 也可以替换成 GLOB_RECURSE 这样就能自动包含所有子文件夹�
 + `PROJECT_SOURCE_DIR` 表示最近一次调用 project 的 CMakeLists.txt 所在的源码目录。  
 + `CMAKE_CURRENT_SOURCE_DIR` 表示当前 CMakeLists.txt的源码根目录。  
 + `CMAKE_SOURCE_DIR` 表示最外层 CMakeLists.txt的源码根目录 。   
-> 利益 `PROJECT_SOURCE_DIR` 可以实现从子模块里直接获得项目最外层目录的路径。    
+> 利用 `PROJECT_SOURCE_DIR` 可以实现从子模块里直接获得项目最外层目录的路径。    
 不建议使用 `CMAKE_SOURCE_DIR`，那样会让你的项目无法被人作为子模块使用。
+
+## 其他相关变量
+
+PROJECT_SOURCE_DIR 👈当前项目源码路径(存放main.cpp的地方)   
+PROJECT_BINARY_DIR 👈当前项目输出路径(存放main.exe的地方)
+
+PROJECT_SOURCE_DIR 👈根目录源码路径(存放main.cpp的地方)   
+PROJECT_BINARY_DIR 👈根目录输出路径(存放main.exe的地方)  
+
+PROJECT_IS_TOP_LIVEL 👈 BOOL类型，表示当前项目是否是(最顶层的)根项目    
+PROJECT_NAME 👈 当前项目名  
+CMAKE_PROJECT_NAME 👈 根项目的项目名    
+
+## 设置CXX语言于标准
+
+👇 同时启用 c c++
+~~~CMAKE
+project(hellocmake LANGUAGES C CXX)
+~~~
+
+👇 设置 c++ 标准
+~~~CMAKE
+# 设置 c++ 标准为 c++17 如果想用20就写20
+set(CMAKE_CXX_STANDARD 17)
+# 检测到编译器如果不支持 c++17 标准就会报错
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# 设置ON表示开启 GCC 特有特性，如果需要跨平台开发就选择OFF
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# 以上变量请设置在project之前
+project(hellocmake LANGUAGES C CXX)
+~~~
+
+
+
+
+
