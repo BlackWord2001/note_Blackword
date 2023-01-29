@@ -18,6 +18,15 @@ OpenGL 4.5 在 OpenGL 3.3 的基础上增加了很多新特性。例如：
 
     这些只是 OpenGl 4.5 的部分新特性，实际上还有很多其他新功能，例如对调试和优化的增强支持等。
 
+# 顶点和索引
++ glVertexAttribPointer     指定了渲染时索引值为 index 的顶点属性数组的数据格式和位置。
+index 指定要配置的顶点属性的编号。
+    + size 指定每个顶点属性的分量数（1、2、3 或 4，就像向量的维度一样）。
+    + type 指定每个分量的数据类型，可以是 GL_BYTE、GL_UNSIGNED_BYTE、GL_SHORT、GL_UNSIGNED_SHORT、GL_INT、GL_UNSIGNED_INT、GL_FLOAT 或 GL_DOUBLE。
+    + normalized1 指定是否将数据归一化到 [0,1] 或 [-1,1] 范围内。
+    + stride （步长）指定连续两个顶点属性间的字节数。如果为 0，则表示顶点属性是紧密排列的。
+    + pointer 指向缓冲对象中第一个顶点属性的第一个分量的地址。（offset的作用）
+
 
 # shader.h
 ```glsl
@@ -186,4 +195,66 @@ FragColor = vec4(result, 1.0);
 
 ![image](./images/4.png)
 
-# 材质
+# 纹理加载（stb_image.h）
+
+1. 在加载纹理之前我们先要使用OpenGL中的 `glVertexAttribPointer` 函数指定渲染时索引值，指定我们的UV信息。
+    ~~~c++
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+    ~~~
+
+2. 在顶点着色器中我们需要传入 `glEnableVertexAttribArray` 这个函数中的参数
+    ~~~ glsl
+    // 为UV位置变量的属性位置值为2
+    layout (location = 2) in vec2 aTexCoords;
+    // 把顶点坐标传给片段着色器
+    out vec2 TexCoords;
+
+    void main() {
+        TexCoords = aTexCoords;
+        ...
+    }
+    ~~~
+    片段着色器中输入
+    ~~~glsl
+    in vec2 TexCoords;
+
+    uniform sampler2D ourTexture;
+
+    void main() {
+        FragColor = texture(ourTexture, TexCoord);
+    }
+    ~~~
+
+3. 纹理加载部分
+    ~~~c++
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    // 设置纹理环绕方式
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // 设置多级渐远纹理
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // 加载纹理
+    int width, height, nr_channels;
+    unsigned char* data = stbi_load("./asset/image/container2.png", &width, &height, &nr_channels, 0);
+    if (data) 
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else {
+        cout << "无法加载纹理" << endl;
+    }
+    // 释放图像的内存
+    stbi_image_free(data);
+    ~~~
+
+4. 在wihile循环中绘制
+    ~~~c++
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindVertexArray(cube_vao);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    ~~~
