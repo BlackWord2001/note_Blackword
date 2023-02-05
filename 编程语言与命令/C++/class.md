@@ -6,10 +6,10 @@
         Student(){}
         ```
     + 定义构造函数
-        ```c++
-        Student::Student(char *name, int age, float score){
-        m_name = name;
-        m_age = age;
-        m_score = score;
-        }
-        ```
+```c++
+Student::Student(char *name, int age, float score){
+m_name = name;
+m_age = age;
+m_score = score;
+}
+```

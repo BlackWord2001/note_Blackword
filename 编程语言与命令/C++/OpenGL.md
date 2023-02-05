@@ -153,7 +153,6 @@ glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)width / (float)hei
 
 # 冯氏光照模型
 
-
 ![image](./images/3.png)
 
 + 环境光照(Ambient Lighting)：即使在黑暗的情况下，世界上通常也仍然有一些光亮（月亮、远处的光），所以物体几乎永远不会是完全黑暗的。为了模拟这个，我们会使用一个环境光照常量，它永远会给物体一些颜色。

@@ -95,3 +95,6 @@ end
 
 ![image](./images/1.png) | ![image](./images/2.png)
 ---|---
+
+## 图片大小
+<img src="./images/3.png" alt="drawing" width="200"/>
