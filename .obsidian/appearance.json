@@ -1,3 +1,5 @@
 {
-  "accentColor": ""
+  "accentColor": "",
+  "monospaceFontFamily": "Fira Code",
+  "textFontFamily": "微软雅黑"
 }
