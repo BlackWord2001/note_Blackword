@@ -44,5 +44,5 @@ Gradient Linear 3 | 渐变
 **Pattern Input 1**  
 如果想使用 Pattern Input 1输入图案需要在  INSTANCE PARAMETERS → Pattern → *Pattern*  中把默认 `Square` 换成 `Pattern Input`。
 
-**Pattern Input 2** \  
+**Pattern Input 2** <br>
 换行测试
