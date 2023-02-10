@@ -93,7 +93,7 @@
 
 ### 拉取远程分支到本地
 1. **方法一：git checkout targetbranch**
-~~~
+~~~shell
 1）首先，获取远程所有分支
     git fetch 
  
@@ -105,7 +105,7 @@
 ~~~
 
 2. **方法二：git checkout -b 本地分支名 origin/远程分支名**
-~~~
+~~~shell
 1）首先，获取远程所有分支
     git fetch 
  
@@ -114,14 +114,14 @@
 ~~~
 
 3. **方法四：git checkout -t origin/远程分支名**
-~~~
+~~~shell
 1）首先，获取远程所有分支
     git fetch 
 2）创建与远程分支关联的本地分支
     git checkout -t origin/远程分支名
 ~~~
 4. **方法三：git checkout --track origin/远程分支名**
-~~~
+~~~shell
 1）首先，获取远程所有分支
     git fetch 
  
@@ -151,7 +151,7 @@
 ```
 
 设置代理
-```
+```shell
 # 设置http:
 git config --global http.proxy http://127.0.0.1:1080
 # 设置https:
@@ -174,7 +174,7 @@ git config --global --unset https.proxy
 
 ### ❌`git add .` 出现错误
 `git add .`的时候无反应提示如下↓ ，可能是你命令操作的位置不在项目根目录。
-```
+```shell
 hint: Use -f if you really want to add them.
 hint: Turn this message off by running
 hint: "git config advice.addIgnoredFile false"
@@ -184,7 +184,7 @@ hint: "git config advice.addIgnoredFile false"
 
 `git pull` 拉取时候出现<font color="#dd0000">The following untracked working tree files would be overwritten by merge:</font><br/> 
 
-```bash
+```shell
 git clean -n
 // 是一次 clean 的演习, 告诉你哪些文件会被删除，不会真的删除
  

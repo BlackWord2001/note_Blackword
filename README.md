@@ -4,15 +4,17 @@
 
 ### 按照文件夹分类
 
-+ **[编程语言于命令]**
-    + cmake
-    + ffmpeg
-    + Git
-    + markdown
-    + terminal
-+ **[软件]**
-    + **[Blender]**
-        + Blender-实列-插件.md
-        + Blender快捷键
-    + Krita
-    + Unity
+~~~
+├─Linux
+├─工具
+├─编程语言与命令
+│  ├─C++
+│  └─RUST-lang
+└─软件
+    ├─Blender
+    ├─Krita
+    ├─Substance
+    ├─Unity
+    ├─Unreal Engine
+    └─代码编辑器
+~~~

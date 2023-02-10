@@ -44,5 +44,5 @@ Gradient Linear 3 | 渐变
 **Pattern Input 1**  
 如果想使用 Pattern Input 1输入图案需要在  INSTANCE PARAMETERS → Pattern → *Pattern*  中把默认 `Square` 换成 `Pattern Input`。
 
-**Pattern Input 2** <br>
-换行测试
+**Pattern Input 2**  
+INSTANCE PARAMETERS → Pattern → Pattern Input Number 可以设置更多图案输入，在 Pattern Input Distribution（图像输入分布）这个选项中默认使用的是 `Random` 会随机排列第二个图案，我们想并排可以改成 `Pattern Number` ，如果并排不是你要的效果那么可以调整 INSTANCE PARAMETERS → Position → `Offset` 的值来让他们交叉。 
