@@ -18,11 +18,12 @@
 6. 最后把我们的 ***Blur*** 输出连到 ***Ambient Occlusion (HBAO)*** 和 ***Height***
 还有 ***Normal (法线)*** 上。
 
-⚠（因为截图大小原因***Normal (法线)*** 就没截进去，请自行连接）  
-![image](./images/Aan2.jpg)
+⚠（因为截图大小原因***Normal (法线)*** 就没截进去，请自行连接） 
 
-↓ 输出效果  
-![image](./images/Aan3.jpg)
+![image](./images/Aan2.jpg) |![image](./images/Aan3.jpg)
+:-: | :-:
+节点 | 渲染效果
+
 
 ## 添加颜色
 
@@ -34,7 +35,7 @@
 4. 我们需要使用 Curvature Smooth（曲率平滑） 获取 Normal 曲率（Curvature），再通过 Levels（色阶）来调整灰度让颜色更深对比再强烈一些，然后连接到我们接下来要新建的 Blend 节点上的 Opacity 入口；
 5. 再原有的 Blend 节点后再新增一个 Blend ，再新建一个 Uniform Color  连接到 Foreground（前景色）这个 Uniform Color 的颜色需要设置的比前一个更亮一些，最后我们把这个Blend 节点给连接到 Base Color。
 
-最终效果参考  
-![image](./images/Aan5.jpg)
-节点最终效果参考
-![image](./images/Aan6.jpg)
+
+![image](./images/Aan5.jpg) | ![image](./images/Aan6.jpg)
+:-: | :-:
+最终效果参考  |  节点最终效果参考
