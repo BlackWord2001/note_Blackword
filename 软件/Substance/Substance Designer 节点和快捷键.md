@@ -7,6 +7,8 @@
 <kbd>Alt</kbd>| 在链接上增加拐点
 <kbd>Shift</kbd> | 按住可以使参数中的角度按照45°∠旋转
 <kbd>Space</kbd> | 快捷搜索节点
+<kbd>X</kbd> | 互换连接线
+
 
 # Function Nodes
 ## Atomic Nodes
