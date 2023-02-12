@@ -35,3 +35,23 @@
 + 基本参数：所有节点都有的通用参数
 + 实列参数：节点特有参数
 + 特定参数：节点特有参数
+
+#  节点具体使用
+
+## Tile Sampler
+
+节点入口
+
+![image](./images/tile_sampler_0.jpg)
+
++ Pattern Input 1：形状灰度图输入
++ Scale Map Input ：缩放图输入
++ Displacement Map Input：高度图输入
+
+### Tile Sampler节点入口用法
+
+**Pattern Input 1**  
+如果想使用 Pattern Input 1输入图案需要在  INSTANCE PARAMETERS → Pattern → *Pattern*  中把默认 `Square` 换成 `Pattern Input`。
+
+**Pattern Input 2**  
+INSTANCE PARAMETERS → Pattern → Pattern Input Number 可以设置更多图案输入，在 Pattern Input Distribution（图像输入分布）这个选项中默认使用的是 `Random` 会随机排列第二个图案，我们想并排可以改成 `Pattern Number` ，如果并排不是你要的效果那么可以调整 INSTANCE PARAMETERS → Position → `Offset` 的值来让他们交叉。 
