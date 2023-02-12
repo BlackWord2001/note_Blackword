@@ -6,7 +6,7 @@
 
 # 石墙纹理1
 
-![image](./images/Aan1.jpg)|![image](./images/Aan2.jpg)
-:-:|:-:
-节点|效果
+![image](./images/Aan1.jpg)|
+:-:|
+节点|
 ***Tile Sampler*** 用于生成基础的砖块纹理（这个比较基础就不细讲了）；先来看 ***Slope Blur Grayscale*** ，***Perlin Noise（柏林噪声）*** 这两个节点；我们主要使用以上两个节点来控制我们的石砖的做旧；***Flood Fill*** 则是控制石砖的坡度，因为***Flood Fill***输出的是颜色信息我们可以顺便使用 ***Flood Fill to Gradinet*** 来转换成我们需要的灰度信息，在这个节点中有个 Angle Variation 的参数可以调节石砖坡度朝向的随机旋转我一般设置为`1`；完成以上四个节点后我们再使用一个**Blend（混合）** 节点让以上两套节点进行相乘（Multiply），合并两套节点的效果；最后我们可以加入一个 ***Blur（模糊）*** 节点让高度图和法线的效果不那么生硬，其中模糊的强度我设置的是`0.6`。
