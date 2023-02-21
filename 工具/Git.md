@@ -214,3 +214,8 @@ git status
 // 运行后, 工作目录和缓存区回到最近一次 commit 时候一摸一样的状态。
 // 此时建议运行 git status，会告诉你这是一个干净的工作目录, 又是一个新的开始了！
 ```
+
+### ❌GitExtensions.exe: No such file or directory
+当git commit的时候出现 GitExtensions.exe: No such file or directory等提示我们可以把编辑器修改回vim
+
+`git config --global core.editor 'vim'`
