@@ -11,6 +11,10 @@
 	+ 在Windows和Mac上，右键点击项目的 `.uproject` 文件并点击 **生成项目文件（Generate Project Files）** 。完成后，你应该会在项目的文件夹中看到 `.code-workspace` 文件。
 		![image](./images/code-workspace.jpg)
 
+# 常见问题
 ## vscode c/c++扩展 找不到头文件问题
 我个人使用的编辑器是 vscode 编辑器， unreal vscode官方文档有给出具体的配置方案，但是有些问题文档中并没有说，比如新建的c++类会提示找不到头文件这类问题导致没法使用代码提示，官方给的解决方案是在`.vscode/c_cpp_properties.json`这个文件中加入`includePath`这个参数用来包含头文件，但是我试了这个方便并行不通（可能是我对json不够了解）；所以我找到了另一种解决方法，直接在资源管理器中右键点击项目的 `.uproject` 文件并点击 **生成项目文件（Generate Project Files）** 后就能搜索的到类的头文件了。
 
+## could not be compiled try rebuilding from source manually
+
+在新的电脑打开工程文件可能会出现此类错误提示，我出现这个错误之前还有一个 visual studio tools的插件报错，可能是因为没有安装插件而导致的工程文件无法生成。
