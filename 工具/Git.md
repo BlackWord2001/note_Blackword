@@ -83,7 +83,7 @@
 切换到主分支  
 ` git checkout master `
 
-合并分支  
+## 合并分支  
 ` git merge [分支名称] `
 ` git merge --no-ff [分支名称] `（推荐使用）
 `--no-ff` 在这的作用是禁止快进式合并；从合并后的代码来看，结果其实是一样的，区别就在于 `--no-ff` 会让 Git 生成一个新的提交对象。为什么要这样？通常我们把 master 作为主分支，上面存放的都是比较稳定的代码，提交频率也很低，而 feature 是用来开发特性的，上面会存在许多零碎的提交，快进式合并会把 feature 的提交历史混入到 master 中，搅乱 master 的提交历史。所以如果你根本不在意提交历史，也不爱管 master 干不干净，那么 `--no-ff` 其实没什么用。不过，如果某一次 master 出现了问题，你需要回退到上个版本的时候，比如上例，你就会发现退一个版本到了 B，而不是想要的 F，因为 feature 的历史合并进了 master 里。
@@ -100,7 +100,11 @@ D---E---F
          /         \
 D---E---F-----------G master
 ~~~
-
+###  ❌解决合并冲突
+**二选一方法**
++ 保留本地代码：`git checkout --ours fileName`
++ 保留合并分支代码： `git checkout --theirs fileName`
+> 相当于，在发生冲突的时候，–ours和–theirs会选择保留策略，执行完之后，git add 即可，不会再有任何冲突。
 
 ### 拉取远程分支到本地
 1. **方法一：git checkout targetbranch**
@@ -180,12 +184,6 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
-## 合并分支
-
-合并操作建议先在master上先建立一个新的分支，如果要把其他分支合并到 master 主分支请先切换到master。  
-`git merge 分支名`
-
-
 # 常见错误
 
 ### ❌`git add .` 出现错误
@@ -235,3 +233,32 @@ git status
 当git commit的时候出现 GitExtensions.exe: No such file or directory等提示我们可以把编辑器修改回vim
 
 `git config --global core.editor 'vim'`
+
+### ❌路径错误
+假如我们在解决冲突文件二选一的时候出现
+error: pathspec 'Assets/ArtMrg/Model/Membrane' did not match any file(s) known to git
+error: pathspec 'packs/金属0.mat' did not match any file(s) known to git
+> 错误：路径规范“Assets/ArtMrg/Model/MMembrane”与git已知的任何文件都不匹配
+> 错误：pathspec包/金属0.mat'与git已知的任何文件都不匹配
+
+这是我们实际的文件路径：Assets/ArtMrg/Model/Membrane packs/金属0.mat
+
+我们发现上方的文件路径中 Membrane packs这个文件夹中有一个空格，git并识别不了这个空格我们就需要改成：Membrane" "packs 这样；或者用两个单引号''把整个路径给圈起来如
+
+方法1 在空格位置增加双引号
+~~~ bash
+Assets/ArtMrg/Model/Membrane" "packs/金属0.mat
+~~~
+方法2 把整个路径使用单引号围起来
+~~~ bash
+`Assets/ArtMrg/Model/Membrane packs/金属0.mat`
+~~~
+
+### ❌.gitignore不生效，不忽略
+决方法: git清除本地缓存（改变成未track状态），然后再提交:  
+~~~ shell
+git rm -r --cached .  
+git add .  
+git commit -m ‘update .gitignore’  
+git push -u origin master
+~~~
