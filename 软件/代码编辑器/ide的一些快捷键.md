@@ -13,3 +13,4 @@
 <kbd>Ctrl</kbd> + <kbd>123</kbd>|切换代码窗口
 <kbd>Ctrl</kbd> + <kbd>G</kbd>|跳转到指定行
 <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓/↑</kbd>| 上下复制行
+<kbd>Ctrl</kbd> + <kbd>K</kbd> + <kbd>F</kbd> | 格式化选中部分文档
