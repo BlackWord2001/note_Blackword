@@ -6,7 +6,7 @@
 |:---|:---
 |<kbd>Ctrl</kbd>+<kbd>.|切换-原点模式
 
-## 着色器编辑器(Shader Editor)快捷键
+## 节点编辑器(Shader Editor)快捷键
 > 部分功能需要使用`node Wrangler`插件。<br>
 > LMB(鼠标左键)，RMB(鼠标右键)，MMB（鼠标中键）
 
@@ -24,6 +24,7 @@
 |<kbd>Ctrl</kbd>+<kbd>RMB</kbd>|切断连接
 |<kbd>Shift</kbd>+<kbd>S</kbd>|更换选中节点到其他节点类型，而不需要重新链接
 |<kbd>O</kbd>|生成一个输出节点
+|<kbd>Alt</kbd>+<kbd>P</kbd>|把一个或多个节点从框中分离
 
 ## 大纲视图技巧
 |操作|作用|

@@ -106,7 +106,7 @@ D---E---F-----------G master
 + 保留合并分支代码： `git checkout --theirs fileName`
 > 相当于，在发生冲突的时候，–ours和–theirs会选择保留策略，执行完之后，git add 即可，不会再有任何冲突。
 
-### 拉取远程分支到本地
+## 拉取远程分支到本地
 1. **方法一：git checkout targetbranch**
 ~~~shell
 1）首先，获取远程所有分支
@@ -143,6 +143,13 @@ D---E---F-----------G master
 2）创建与远程分支关联的本地分支
     git checkout --track origin/远程分支名 
 ~~~
+### ❌git远程分支删除后，本地git branch -a或-r还能看到被删除的分支的解决方法
+
+删除远程仓库已经不存在的分支
+
+````shell
+git remote prune origin
+````
 
 ## 删除分支
 删除分支  
