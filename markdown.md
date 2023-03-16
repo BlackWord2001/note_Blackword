@@ -1,3 +1,5 @@
+# <center> 标题栏居中</center>
+
 ## 颜色
 浅红色文字：<font color="#dd0000">浅红色文字：</font><br/> 
 深红色文字：<font color="#660000">深红色文字</font><br /> 

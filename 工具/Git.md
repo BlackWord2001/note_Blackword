@@ -100,6 +100,14 @@ D---E---F
          /         \
 D---E---F-----------G master
 ~~~
+
+# 打包为zip和tar
+
+~~~ shell
+// 打包master分支的所有文件
+git archive --format=zip --output master.zip master
+~~~
+
 ###  ❌解决合并冲突
 **二选一方法**
 + 保留本地代码：`git checkout --ours fileName`
