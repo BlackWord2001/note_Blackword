@@ -35,3 +35,24 @@
 
 # FVector
 FVector是虚幻引擎中的一个结构体，用于表示三维向量。它包含三个浮点数，分别表示X、Y、Z三个轴向量的大小。在虚幻引擎中，FVector经常用于表示位置、方向和缩放等信息。
+
+# include头文件错误
+假如当你想使用`FInputActionValue`引入比如 “增强输入模块” 但是无法找到头文件这类问题
+
+~~~cpp
+// MyCharacter.h
+#include "InputActionValue.h"
+~~~
+
+1. 你需要在 `项目名称.Build.cs`这个c#文件中添加模块，模块名称一般官方API手册中都有写比如
+
+![image](./images/ucpp-0.jpg)
+
+~~~cs
+// 项目名称.Build.cs
+
+// 在这行添加模块
+PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+~~~
+
+2. 您需要做的不仅仅是重新生成 VS 项目文件。 关闭虚幻编辑器和 Visual Studio。 打开您的项目目录并删除所有这些文件夹 - .vs、Binaries、Intermediate、Saved [可选]，以及 YourGame.sln 文件。 确保 Config 文件夹在那里……
