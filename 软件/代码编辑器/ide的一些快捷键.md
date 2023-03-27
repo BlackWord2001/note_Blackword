@@ -14,3 +14,4 @@
 <kbd>Ctrl</kbd> + <kbd>G</kbd>|跳转到指定行
 <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓/↑</kbd>| 上下复制行
 <kbd>Ctrl</kbd> + <kbd>K</kbd> + <kbd>F</kbd> | 格式化选中部分文档
+<kbd>Ctrl</kbd> + <kbd>Space</kbd> | 显示建议
