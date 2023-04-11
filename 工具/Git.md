@@ -172,6 +172,13 @@ git remote prune origin
 
 `git reset --hard 91a90dbd831a31646c0f0eac897d470e81d53e7f`回退到某个暂存区版本  
 
+## git stash 命令
+
+就在此时，线上版本master出现了bug，我们应该放下手头上新功能的开发工作先将master上的bug修复，这个时候dev分支下的改动怎么处理？ - 向dev分支提交新功能的代码，然后再切换到master下 - 直接切换到master分支下
+
+首先我们新功能的代码还没开发完成，其次新功能这里还有一些bug没解决，就这样把有问题的代码提交到dev分支中，虽然可以解决目前我们的处境但不是很妥；但是第二种方案，直接切换，明显更不妥。怎么办？我们好像陷入了困境……
+
+Git提供了一个**git stash命令**恰好可以完美解决该问题, 其将当前未提交的修改(即，工作区的修改和暂存区的修改)先暂时储藏起来，这样工作区干净了后，就可以切换切换到master分支下拉一个fix分支。在完成线上bug的修复工作后，重新切换到dev分支下通过**git stash pop**命令将之前储藏的修改取出来，继续进行新功能的开发工作
 
 ## .gitignore 文件
 设置Git忽略的文件，这些文件不参与Git库的提交与管理。
@@ -277,3 +284,5 @@ git add .
 git commit -m ‘update .gitignore’  
 git push -u origin master
 ~~~
+
+git remote rm origin 删除关联的origin的远程库
