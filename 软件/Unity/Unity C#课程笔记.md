@@ -62,65 +62,41 @@ GameObject go2 = Instantiate(Prefab, Vector3.zero,  Quaternion.identity); // 把
 Destroy(go2);
 ~~~
 
-# <center>函数</center>
-
-## Debug.Log()
-在Unity中，Debug.Log()是一个用于打印消息到控制台的函数1。你可以使用它来打印任何你想要的消息，例如变量的值、对象的名称等等
-
+## 场景
 ~~~cs
-Debug.Log("Hello World!");
-~~~
+// 两个类，场景类，场景管理类
+// SceneManager.LoadScene("Learn1");
 
-你还可以使用其他的Debug函数，例如 `Debug.LogWarning()` 和 `Debug.LogError()`，来打印不同类型的消息。
+// 获取当前场景
+Scene scene = SceneManager.GetActiveScene();
+Debug.Log(scene.name);
 
-# <center>变量</center>
+// 场景是否已经加载
+Debug.Log(scene.isLoaded);
 
-## Time.deltaTime
-`Time.deltaTime` 是一个变量，用于获取当前帧和上一帧之间经过的时间。它用于使游戏与帧率无关，以便以相同的速度运行游戏。
+// 场景路径
+Debug.Log(scene.path);
 
-~~~cs
-float timer = 0;
+// 场景索引
+Debug.Log(scene.buildIndex);
 
-void Update()
-    {
-        timer += Time.deltaTime;
+// 获取场景下所有的子物体
+GameObject[] gos = scene.GetRootGameObjects();
+Debug.Log(gos.Length);
 
-        if (timer > 3)
-        {
-            Debug.Log("大于3秒");
-        }
-    }
-~~~
+/* 场景管理类 */
+// 创建新的场景
+Scene newScene = SceneManager.CreateScene("newScene");
 
-## Time.time
-Time.time 是一个变量，用于获取从游戏开始到现在所用的时间，它是一个静态变量，可以直接访问，而不需要实例化任何对象。
+// 当前以加载的场景数量
+Debug.Log(SceneManager.sceneCount);
 
-与 Time.deltaTime 不同，Time.time 不是用于计算帧之间的时间差。它是一个浮点数，表示从游戏开始到现在所用的时间（以秒为单位）。
+// 卸载场景（销毁）
+SceneManager.UnloadSceneAsync(newScene);
 
-您可以使用 Time.time 来计算游戏运行的时间，或者在游戏中使用它来控制某些事情以恒定速率发生，而不受（可能极度波动的）帧速率的影响。
+// 加载场景（替换当前场景）
+// SceneManager.LoadScene("Learn1", LoadSceneMode.Single);
 
-~~~cs
-Debug.Log(Time.time); // 游戏开始到现在所花的时间
-~~~
-
-## Time.timeScale
-`Time.timeScale` 是一个变量，用于控制游戏时间缩放比例，它是一个浮点数，表示时间流逝的速度。
-
-当 Time.timeScale 的值为 1 时，时间流逝的速度与现实时间相同。当 Time.timeScale 的值为 0.5 时，时间流逝的速度是现实时间的一半。当 Time.timeScale 的值为 0 时，游戏暂停。
-
-您可以使用 Time.timeScale 来控制游戏中的时间流逝速度，例如在游戏中实现慢动作效果或加速效果。此外，您还可以使用 Time.timeScale 来控制游戏中所有与时间有关的操作，例如动画、物理模拟等。
-
-~~~cs
-Debug.Log(Time.timeScale); // 时间缩放值，默认是1倍
-~~~
-
-## Time.fixedDeltaTime
-`Time.fixedDeltaTime` 是一个变量，用于控制物理和其他固定帧率更新（如 MonoBehaviour 的 FixedUpdate）的时间间隔，它是一个浮点数，表示时间流逝的速度
-
-`Time.fixedDeltaTime` 的默认值为 0.02 秒，可以通过编辑器中的 Project Settings -> Time 来修改
-
-需要注意的是，`Time.fixedDeltaTime` 的时间间隔是相对于受 `Time.timeScale` 影响的游戏内时间的时间间隔。此外，为了读取增量时间，建议改用 `Time.deltaTime`，因为当您位于 FixedUpdate 函数或 Update 函数中时，它会自动返回正确的增量时间
-
-~~~cs
-Debug.Log(Time.fixedDeltaTime); // 固定时间间隔
+// 加载场景（添加到当前场景）
+SceneManager.LoadScene("Learn1", LoadSceneMode.Additive);
 ~~~

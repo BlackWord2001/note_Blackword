@@ -15,3 +15,5 @@
 <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓/↑</kbd>| 上下复制行
 <kbd>Ctrl</kbd> + <kbd>K</kbd> + <kbd>F</kbd> | 格式化选中部分文档
 <kbd>Ctrl</kbd> + <kbd>Space</kbd> | 显示建议
+<kbd>Ctrl</kbd> + <kbd>Alt</kbd>/<kbd>A</kbd>| 切换块注释
+<kbd>Ctrl</kbd> + <kbd>/</kbd> | 切换行注释
