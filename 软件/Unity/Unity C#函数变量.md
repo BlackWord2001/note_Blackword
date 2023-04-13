@@ -1,6 +1,5 @@
-# <center>函数/变量</center>
 
-## 生命周期方法
+# <center>生命周期方法</center>
 > 以下按照调用先后顺序排序
 
 方法名称 | 调用时间
@@ -14,6 +13,7 @@ LateUpdate | 在Update每调用完一次后， 紧跟着调用一次
 OnDisable | 与onEnable相反，组件未激活时调用
 OnDestroy | 被销毁后调用一次
 
+# <center>函数/变量</center>
 ## Application.OpenURL()
 `Application.OpenURL()` 是用于在 Unity 应用程序中打开指定的 URL。这个 API 是跨平台的，可以支持文件处理程序，使 Unity 开发人员不必为每个平台编写自己的处理程序。当玩家在游戏中点击链接时，游戏开发人员通常使用 OpenUrl 来启动本地系统的 Web 浏览器
 ~~~cs
