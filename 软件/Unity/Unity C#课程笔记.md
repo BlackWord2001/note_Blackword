@@ -100,3 +100,38 @@ SceneManager.UnloadSceneAsync(newScene);
 // 加载场景（添加到当前场景）
 SceneManager.LoadScene("Learn1", LoadSceneMode.Additive);
 ~~~
+
+## 位置旋转缩放
+
+获取位置缩放旋转
+~~~ cs
+Debug.Log(transform.position); // 全局坐标
+Debug.Log(transform.localPosition); // 相对坐标
+
+// 获取旋转
+Debug.Log(transform.rotation);
+Debug.Log(transform.localRotation);
+Debug.Log(transform.eulerAngles);
+Debug.Log(transform.localEulerAngles);
+
+// 获取缩放
+Debug.Log(transform.localScale);
+
+// 向量（物体的方向）
+Debug.Log(transform.forward);
+Debug.Log(transform.right);
+Debug.Log(transform.up);
+~~~
+
+变换
+
+~~~cs
+// 时时刻刻看向世界中心点 (0, 0, 0)
+transform.LookAt(Vector3.zero);
+
+// 每帧率旋转1°
+transform.Rotate(Vector3.up, 1);
+
+// 绕某个物体旋转
+transform.RotateAround(Vector3.zero, Vector3.up, 1);
+~~~
