@@ -1,19 +1,5 @@
 # <center>C# 脚本<center>
 
-## 生命周期方法
-> 以下按照调用先后顺序排序
-
-方法名称 | 调用时间
-:-|:-
-Awake | 最早调用，所以一般可以在此实现单例模式
-OnEnable | 组件激活后调用。在Awake后会调用一次
-Start | 在Update之前调用一次， 在OnEnablo之后调用，可以在此设置一些初始值
-FixedUpdate | 固定频率调用方法，每次调用与上次调用的时间间隔相同（默认为0.02ms调用一次，可以在 `项目设置` → `时间` → `固定时间步进` 中修改它）
-Update | 帧率调用方法，每帧调用一次，每次调用与上次调用的时间间隔不相同
-LateUpdate | 在Update每调用完一次后， 紧跟着调用一次
-OnDisable | 与onEnable相反，组件未激活时调用
-OnDestroy | 被销毁后调用一次
-
 
 ## 动态修改物体属性物体类的使用
 ~~~cs
@@ -134,4 +120,183 @@ transform.Rotate(Vector3.up, 1);
 
 // 绕某个物体旋转
 transform.RotateAround(Vector3.zero, Vector3.up, 1);
+~~~
+
+父子关系
+~~~cs
+// 获取父物体
+// transform.parent.gameObject
+
+// 子物体个数
+Debug.Log(transform.childCount);
+
+// 解除与子物体的父子关系
+transform.DetachChildren();
+
+// 获取子物体
+Transform trans = transform.Find("Child");
+transform.GetChild(0);
+
+// 判断一个物体是不是另一个物体的子物体
+bool res = trans.IsChildOf(transform);
+Debug.Log(res);
+
+// 设置父物体
+trans.SetParent(transform);
+~~~
+
+## 按键输入检测
+~~~cs
+// 鼠标输入 0左键 1右键 2滚轮
+if (Input.GetMouseButtonDown(0))
+{
+    Debug.Log("按下了鼠标左键");
+}
+
+if (Input.GetMouseButton(0))
+{
+    Debug.Log("长按鼠标左键");
+}
+
+if(Input.GetMouseButtonUp(0))
+{
+    Debug.Log("抬起了鼠标左键");
+}
+
+// 键盘输入（枚举）
+if (Input.GetKeyDown(KeyCode.A))
+{
+    Debug.Log("按下了A");
+}
+if (Input.GetKey(KeyCode.A))
+{
+    Debug.Log("长按A");
+}
+if (Input.GetKeyUp(KeyCode.A))
+{
+    Debug.Log("松开了A");
+}
+
+if (Input.GetKeyDown(KeyCode.A))
+{
+    Debug.Log("按下了A");
+}
+// 键盘输入（字符）可以使用小写不能使用大写
+if (Input.GetKeyDown("b"))
+{
+    Debug.Log("按下了B");
+} 
+
+~~~
+
+## 虚拟轴
+那么虚拟轴到底是什么?简单来说，虚拟轴就是一-个数值在-1~ 1内的数轴，这个数轴上重要的数值就是-1.0和1。
+当使用按键模拟一个完整的虚拟轴时需要用到两个按键,即将按键1设置为负轴按键,按键2设置为正轴按键。在没有按下任何按键的时候，虚拟轴的数值为0;在按下按键1的时候，虚拟轴的数值会从0~-1进行过渡;在按下按键2的时候，虚拟轴的数值会从0~ 1进行过渡
+
+
+    按键1           没按键          按键2
+    |_______________|_______________|
+    -1              0               1
+
+`项目设置` → `输入管理` → `轴线` 可以查看虚拟轴设置
+
+获取虚拟轴
+~~~cs
+float horizontal = Input.GetAxis("Horizontal");
+float vertical = Input.GetAxis("Vertical");
+Debug.Log(horizontal + "   " + vertical);
+~~~
+
+获取虚拟按键
+~~~cs
+if(Input.GetButtonDown("Jump"))
+{
+    Debug.Log("空格");
+}
+~~~
+
+## 音乐音效
+再添加音效c#代码前先给物体增加一个 `Audio Source` 组件才能让物体正常播放音频
+
+代码中 `music1` 为音乐 `music2` 为音效
+~~~cs
+public class AudioTest : MonoBehaviour
+{
+    public AudioClip music1;
+    public AudioClip music2;
+
+    // 播放器组件
+    private AudioSource player;
+
+    void Start()
+    {
+        player = GetComponent<AudioSource>();
+        // 设定播放的音频片段
+        player.clip = music1;
+        // 循环
+        player.loop = true;
+        // 音量
+        player.volume = 0.5f;
+        // 播放
+        player.Play();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // 如果当前正在播放
+            if (player.isPlaying)
+            {
+                // 暂停播放
+                player.Pause();
+
+                // 停止播放
+                // player.Stop();
+            }
+            else
+            {
+                // 暂停
+                player.UnPause();
+
+                // 开始播放
+                // player.Play();
+            }
+        }
+
+        // 按鼠标左键播放声音
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 播放音效
+            player.PlayOneShot(music2);
+        }
+    }
+}
+~~~
+
+## 角色控制初步实现
+
+在添加C#脚本之前先给我们的角色创建一个Character Controller的组件
+
+~~~cs
+private CharacterController player;
+
+void Start()
+{
+    player = GetComponent<CharacterController>();
+}
+
+void Update()
+{
+    // 水平
+    float horizontal = Input.GetAxis("Horizontal");
+    // 垂直
+    float vertical = Input.GetAxis("Vertical");
+    // 创建成一个方向向量
+    Vector3 dir = new Vector3(horizontal, 0, vertical);
+    // Debug.DrawRay(transform.position, dir, Color.red);
+    // 朝向该方向移动（受重力影响）
+    player.SimpleMove(dir * 2);
+}
 ~~~
