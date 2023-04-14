@@ -1,5 +1,19 @@
 # <center>函数/变量</center>
 
+## 生命周期方法
+> 以下按照调用先后顺序排序
+
+方法名称 | 调用时间
+:-|:-
+Awake | 最早调用，所以一般可以在此实现单例模式
+OnEnable | 组件激活后调用。在Awake后会调用一次
+Start | 在Update之前调用一次， 在OnEnablo之后调用，可以在此设置一些初始值
+FixedUpdate | 固定频率调用方法，每次调用与上次调用的时间间隔相同（默认为0.02ms调用一次，可以在 `项目设置` → `时间` → `固定时间步进` 中修改它）
+Update | 帧率调用方法，每帧调用一次，每次调用与上次调用的时间间隔不相同
+LateUpdate | 在Update每调用完一次后， 紧跟着调用一次
+OnDisable | 与onEnable相反，组件未激活时调用
+OnDestroy | 被销毁后调用一次
+
 ## Application.OpenURL()
 `Application.OpenURL()` 是用于在 Unity 应用程序中打开指定的 URL。这个 API 是跨平台的，可以支持文件处理程序，使 Unity 开发人员不必为每个平台编写自己的处理程序。当玩家在游戏中点击链接时，游戏开发人员通常使用 OpenUrl 来启动本地系统的 Web 浏览器
 ~~~cs
@@ -155,3 +169,42 @@ Debug.Log(Time.timeScale); // 时间缩放值，默认是1倍
 ~~~cs
 Debug.Log(Time.fixedDeltaTime); // 固定时间间隔
 ~~~
+
+## transform
+获取 | 描述
+:- | :-
+position | 返回全局坐标
+localPosition | 返回相对坐标
+rotation | 返回相对旋转
+localRotation | 返回全局旋转
+eulerAngles | 返回全局旋转（欧拉角）
+localEulerAngles | 返回相对旋转（欧拉角）
+localScale | 获取自生缩放
+forward | 获取向前向量
+right | 获取向右向量
+up | 获取向上向量
+
+**例子**
+~~~cs
+Debug.Log(transform.position);
+~~~
+
+变换 | 描述
+:- | :-
+LookAt | 让物体朝向另一个物体或者某个方向
+Rotate | 用于以各种方式旋转游戏对象
+RotateAround | 可以让物体围绕某个物体或位置旋转
+
+## Vector3
+
+常用方法 | 描述
+:- | :-
+zero | 返回一个所有分量都为0的向量
+up | 返回一个指向Y轴正方向的向量
+one | 返回一个所有分量都为1的向量。
+forward | 返回一个指向Z轴正方向的向量。
+back | 返回一个指向Z轴负方向的向量。
+right | 返回一个指向X轴正方向的向量。
+left | 返回一个指向X轴负方向的向量。
+down | 返回一个指向Y轴负方向的向量。
+
