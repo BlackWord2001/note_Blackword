@@ -206,6 +206,32 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
+## 仓库瘦身
+你可以使用以下命令删除所有提交历史记录，但保留代码的当前状态1:
+~~~shell
+git checkout --orphan latest_branch
+git add -A
+git commit -am "commit message"
+git branch -D master
+git branch -m master
+git push -f origin master
+~~~
+这将创建一个新的分支，其中包含您的当前代码状态，然后将其推送到远程存储库。如果您想要删除所有提交历史记录并将其与新的远程存储库关联，可以使用以下命令1:
+~~~shell
+rm -rf .git
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin <remote repository URL>
+git push -u --force origin master
+~~~
+请注意，这将删除所有提交历史记录，并且您将无法恢复它们。因此，请确保在执行此操作之前备份您的代码。
+
+## 仓库地址变动
+~~~shell
+git remote rm origin 删除关联的origin的远程库
+git remote add origin <remote repository URL>
+~~~
 # 常见错误
 
 ### ❌`git add .` 出现错误
@@ -285,4 +311,7 @@ git commit -m ‘update .gitignore’
 git push -u origin master
 ~~~
 
-git remote rm origin 删除关联的origin的远程库
+
+core.autocrlf是一个Git变量，用于处理行结束符。它可以设置为三个值：true、input和false。如果你在Windows上使用Git，可以将其设置为true，以便在签出代码时将LF转换为CRLF。如果你在Mac或Linux上使用Git，则可以将其设置为input，以便在签出代码时不进行自动转换。你可以使用以下命令来设置core.autocrlf：git config --global core.autocrlf true。
+`git config --global core.autocrlf true`
+

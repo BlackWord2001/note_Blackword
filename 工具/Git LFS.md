@@ -25,3 +25,13 @@ git lfs track
 
 git lfs track '*.jpg'
 ~~~
+
+
+Git LFS clone 命令已经被弃用，因为 Git clone 命令已经更新，速度与 Git LFS clone 命令相当。因此，现在 Git LFS clone 命令与 Git clone 命令几乎相同，而单独的命令将消失
+
+已经弃用的命令 ↓
+~~~shell
+git lfs clone
+
+git lfs pull
+~~~
