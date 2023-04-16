@@ -229,8 +229,8 @@ git push -u --force origin master
 
 ## 仓库地址变动
 ~~~shell
-git remote rm origin 删除关联的origin的远程库
-git remote add origin <remote repository URL>
+git remote rm origin  #删除关联的origin的远程库
+git remote add origin <remote repository URL> #添加远程仓库地址
 ~~~
 # 常见错误
 

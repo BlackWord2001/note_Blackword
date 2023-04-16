@@ -35,3 +35,6 @@ git lfs clone
 
 git lfs pull
 ~~~
+
+## .gitattributes
+`.gitattributes` 中 `-text` 就是表示这个文件不是文本文件。其余的就是告诉 Git 在处理 filter、diff、merge 时将 pbtxt 文件通过 LFS 的方式处理，打开 .gitconfig 可以看到相关命令的替换。

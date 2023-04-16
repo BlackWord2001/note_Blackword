@@ -300,3 +300,89 @@ void Update()
     player.SimpleMove(dir * 2);
 }
 ~~~
+
+## 火球物理和爆炸
+1. 先从unity资源商店中下载名为 `Procedural fire` 的火焰资源包
+2. 随便挑选一个火焰的预制体然后在上面挂上名为 `FireTest` 的脚本
+3. 在 `Explosion` 预制体上挂一个名为`ExplosionTest`的脚本，用于编写爆炸效果销毁的功能
+
+FireTest.cs
+~~~cs
+// 创建一个爆炸的预设体
+public GameObject Perfab;
+
+// 监听发生碰撞
+private void OnCollisionEnter(Collision other) 
+{
+    // 创建一个爆炸物体 (爆炸物体, 生成位置，旋转)
+    Instantiate(Perfab, transform.position, Quaternion.identity);
+    // 销毁自身
+    Destroy(gameObject);
+
+    // 获取碰撞到的物体并打印
+    Debug.Log(other.gameObject.name);
+}
+
+// 持续碰撞中
+private void OnCollisionStay(Collision other) 
+{
+}
+
+// 结束碰撞
+private void OnCollisionExit(Collision other) 
+{
+}
+~~~
+
+ExplosionTest.cs
+~~~cs
+float timer = 0;
+
+void Update()
+{
+    timer += Time.deltaTime;
+    if (timer > 1)
+    {
+        Destroy(gameObject); // 销毁爆炸
+    }
+}
+~~~
+
+## 触发器
+
+~~~cs
+// 监听触发
+private void OnTriggerEnter(Collider other) {
+    GameObject door = GameObject.Find("door");
+    if (door != null) 
+    {
+        door.SetActive(false);
+    }
+}
+
+// 持续触发
+private void OnTriggerStay(Collider other) 
+{
+}
+
+// 触发结束
+private void OnTriggerExit(Collider other) 
+{
+}
+~~~
+
+## 铰链、弹簧
+Hinge Joint（铰链组件）：非常适合制作门，但也可用于制作链条、摆锤等模型。 
+
+Spring Joint （弹簧组件）：但允许它们之间的距离发生变化，就好像它们被弹簧连接一样。 
+
+## 物理材质
+物理材质 (Physic Material) 用于调整碰撞对象的摩擦力和反弹效果。
+
+要创建物理材质，请从菜单栏中选择 Assets > Create > Physic Material。
+
+![image](./images/PhysicMaterial-1.png)
+
+然后物理材质可以拖拽到相应的碰撞器中（Collider）
+
+![image](./images/PhysicMaterial-2.png)
