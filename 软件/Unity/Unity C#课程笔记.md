@@ -386,3 +386,164 @@ Spring Joint （弹簧组件）：但允许它们之间的距离发生变化，�
 然后物理材质可以拖拽到相应的碰撞器中（Collider）
 
 ![image](./images/PhysicMaterial-2.png)
+
+## 射线
+
+~~~cs
+void Update()
+{
+    if (Input.GetMouseButtonDown(0))
+    {
+        // 射线
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // 声明一个碰撞信息类
+        RaycastHit hit;
+        // 检测碰撞
+        bool res = Physics.Raycast(ray, out hit);
+        // 如果碰撞到的情况下，hit就有内容了
+        if (res == true)
+        {
+            Debug.Log(hit.point);
+            transform.position = hit.point;
+        }
+
+        // 多检测 (射线, 最大距离, 只检测第十个图层)
+        // RaycastHit[] hits = Physics.RaycastAll(ray, 100, 1<<10);
+    }        
+}
+~~~
+
+## 粒子
+暂无记录
+
+## 线段（Line Renderer）and（Trail Renderer）
+Trail Renderer（拖尾）  
+使用此模块可将轨迹添加到一部分粒子。此模块与轨迹渲染器 (Trail Renderer) 组件共享许多属性，但提供了将轨迹轻松附加到粒子以及从粒子继承各种属性的功能。轨迹可用于各种效果，例如子弹、烟雾和魔法视觉效果。
+
+## 动画组件
+### Animation Clip（旧版动画组件）
+Animations：可以 `窗口` > `动画` 中打开动画窗口新建的动画会被自动添加进 `Animations` 中。
+
+我制作了一个 `cube` 左右移动的动画分别命名为 `right` 和 `left`可以看到Animation组件上可以挂在多个动画
+
+![image](./images/AnimationOld-1.png)
+
+
+选中我们保存好的动画文件可以设置动画的拼接模式
+
+![image](./images/AnimationOld-2.png)
+
+接下来我们用 c# 脚本控制`Right`动画的播放
+~~~cs
+void Update()
+{
+    if (Input.GetMouseButtonDown(0))
+    {
+        GetComponent<Animation>().Play("right");
+    }
+}
+~~~
+
+### Animator（新版动画组件）
+![image](./images/Animator-1.png)
+
+Animations 参数消失了，取而代之的是一个名为`控制器`的选项；我们可以在项目资源管理器中创建`动画控制器`
+
+![image](./images/Animator-2.png)
+
+双击这个文件可以打开动画器面板
+
+![image](./images/Animator-3.png)
+
+接下来我们到我们熟悉的动画面板 可以使用<kbd>Ctlr</kbd> + <kbd>6</kbd>可以快速打开，新建一个动画后双击点开后发现和旧版的有些差别。
+
+![image](./images/Animator-4.png)
+
+我们可以右键创建动画的过渡或者设置为图层默认状态（默认播放动画）
+
+![image](./images/Animator-5.png)
+
+### 制作人物动画1（拾取）
+
+![image](./images/Animator-6.png)
+
+![image](./images/Animator-7.png)
+
+播放动画发现`idle`必须要播放完才会播放`pickup`这并不是我们想要的效果，想要他即时触发就需要点击过渡的那条线，会出来详细设置其中有一条就是`有退出时间`这个选项给去掉。
+
+![image](./images/Animator-8.png)
+
+接下来我们需要使用 c#脚本来控制Pickup这个参数的开关，当键盘按下F就播放拾取动画。
+
+~~~cs
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.F))
+    {
+        GetComponent<Animator>().SetTrigger("Pickup");
+    }
+}
+~~~
+
+### 制作人物动画2（跑步）
+
+~~~cs
+public class PlayerControl3 : MonoBehaviour
+{
+    private Animator animator;
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        // 水平轴
+        float horizontal = Input.GetAxis("Horizontal");
+        // 垂直轴
+        float vertical = Input.GetAxis("Vertical");
+        // 向量
+        Vector3 dir = new Vector3(horizontal, 0, vertical);
+
+        // 当用户按下了方向键
+        if (dir != Vector3.zero)
+        {
+            // 面向向量
+            transform.rotation = Quaternion.LookRotation(dir);
+            // 播放跑步动画
+            animator.SetBool("IsRun", true);
+            // 朝向前方移动
+            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+        }
+        else
+        {
+            animator.SetBool("IsRun", false);
+        }
+    }
+}
+~~~
+
+### 动画导入设置
+
+![image](./images/Animator-9.png) | ![image](./images/Animator-10.png)
+
+
+#### 人形 (Avatar)
+如果骨架为人形（有两条腿、两条手臂和一个头），请使用人形动画系统。Unity 通常会检测骨架并将其正确映射到 Avatar。有些情况下，可能需要更改 Avatar 定义 (Avatar Definition) 并手动对映射进行__配置 (Configure)__。
+
+#### 泛型 (Generic)
+如果骨架为非人形（四足动物或任何要动画化的实体），请使用通用动画系统。Unity 会选择一个根节点，但可以确定另一个用作__根节点__的骨骼。
+
+#### 旧版 (Legacy)
+使用旧版动画系统。与 Unity 3.x 及更早版本一样导入和使用动画。
+
+#### 无 (None)
+不存在动画
+
+### 动画裁剪
+
+新建的动画剪辑在项目资源管理器中展开fbx模型文件就能看的到（`run2`）。
+
+![image](./images/Animator-11.png) | ![image](./images/Animator-12.png)
+:-: | :-:
+Animator-11 | Animator-12
