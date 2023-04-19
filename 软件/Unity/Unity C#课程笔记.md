@@ -547,3 +547,75 @@ public class PlayerControl3 : MonoBehaviour
 ![image](./images/Animator-11.png) | ![image](./images/Animator-12.png)
 :-: | :-:
 Animator-11 | Animator-12
+
+### 曲线
+
+![image](./images/Animator-13.png) | ![image](./images/Animator-14.png)
+:-: | :-:
+Animator-13 | Animator-14
+
+~~~cs
+// 获取Test参数并打印出来
+Debug.Log(animator.GetFloat("Test"));
+~~~
+
+### 事件
+
+![image](./images/Animator-15.png) | ![image](./images/Animator-16.png)
+:-: | :-:
+Animator-15 | Animator-16
+
+创建好后在c#脚本中写入同名函数就能进行调用
+
+~~~cs
+void leftFoot()
+{
+    Debug.Log("左脚");
+}
+
+void rightFoot()
+{
+    Debug.Log("右脚");
+}
+~~~
+
+### 混合树
+
+通过下方图片中的操作可以创建新的混合树，然后我们可以双击进入混合树的层级;
+
+![image](./images/Animator-17.png) | ![image](./images/Animator-18.png)
+:-: | :-:
+Animator-17 | Animator-18
+
+我们暂时先用默认的1D混合类型，关闭`Automate Thresholds`选项可以手动分配Thresholds的值。
+
+![image](./images/Animator-19.png)
+
+在混合树中还能新建嵌套的混合树，和其他混合树一样双击点进去就能有详细设置。
+
+![image](./images/Animator-20.png)
+
+### 动画层
+
+默认有三个状态 Entry，Any State，Exit 详细可以看下图解释，Exit后面点再解释。
+
+![image](./images/Animator-21.png)
+
+#### 子状态机
+
+右键面板可以创建一个新的子状态机，除了之前就介绍到的Entry，Any State，Exit还多出一个 Base Layer，他的作用和Exit 相同都是返回上一层状态。
+
+角色通常具有包含若干阶段的复杂动作。合理的做法是识别单独阶段并将单独状态用于每个阶段，而不是用单个状态来处理整个动作。例如，角色可能会有一个名为“Trickshot”（花式射击）的动作；在此动作中，角色会蹲下来稳定瞄准，射击，然后再站起来。
+
+![image](./images/Animator-22.png) | ![image](./images/Animator-23.png)
+:-: | :-:
+Animator-22 | Animator-23
+
+#### 图层
+Unity 使用`动画层`来管理不同身体部位的复杂状态机。相应的示例为，您有一个用于行走/跳跃的下身层，还有一个用于投掷物体/射击的上身层。
+
+我们可以在项目中右键新建一个 `Avatar 遮罩`
+
+![image](./images/Animator-25.png) | ![image](./images/Animator-24.png)
+:-: | :-:
+Animator-22 | Animator-23
