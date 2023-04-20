@@ -624,3 +624,34 @@ Animator-25 | Animator-23
 权重的值越高图层的动画效果越强，强度0.5 相当于`图层1`和`图层2`各混合一半，强度1就相当于遮罩绿色部分完全播放`图层2`的动画。
 
 ![image](./images/Animator-26.png)
+
+### ik
+
+使用反向动力学（IK）让角色的头部或手臂看向或指向场景中的球体。
+
+想要启用IK我们需要打开 `动画器` → `图层` → `IK处理` 的这个选项。
+
+![image](./images/Animator-27.png)
+
+之后在人物脚本上增加如下代码。
+
+~~~cs
+public Transform target;
+
+private void OnAnimatorIK(int layerIndex) 
+{
+    // 设置头部IK权重
+    animator.SetLookAtWeight(1);
+    // 头部旋转
+    animator.SetLookAtPosition(target.position);
+
+    // 设置右手IK权重
+    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+    animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+    // 设置右手IK
+    animator.SetIKPosition(AvatarIKGoal.RightHand, target.position);
+    animator.SetIKRotation(AvatarIKGoal.RightHand, target.rotation);
+}
+~~~
+
+## 导航网格
