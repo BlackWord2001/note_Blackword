@@ -612,10 +612,15 @@ Animator-17 | Animator-18
 Animator-22 | Animator-23
 
 #### 图层
-Unity 使用`动画层`来管理不同身体部位的复杂状态机。相应的示例为，您有一个用于行走/跳跃的下身层，还有一个用于投掷物体/射击的上身层。
+Unity 使用`动画层`来管理不同身体部位的复杂状态机，让身体不同的部位播放不同的动画。相应的示例为，您有一个用于行走/跳跃的下身层，还有一个用于投掷物体/射击的上身层。
 
 我们可以在项目中右键新建一个 `Avatar 遮罩`
 
-![image](./images/Animator-25.png) | ![image](./images/Animator-24.png)
+![image](./images/Animator-25.png)  | ![image](./images/Animator-24.png)
 :-: | :-:
-Animator-22 | Animator-23
+Animator-25 | Animator-23
+
+接下来我们就能把新建的`Avatar 遮罩`给我们第二个图层。  
+权重的值越高图层的动画效果越强，强度0.5 相当于`图层1`和`图层2`各混合一半，强度1就相当于遮罩绿色部分完全播放`图层2`的动画。
+
+![image](./images/Animator-26.png)
