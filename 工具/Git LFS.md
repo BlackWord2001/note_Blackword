@@ -24,6 +24,9 @@ git lfs track '*.jpg'
 git lfs track
 
 git lfs track '*.jpg'
+
+// 关闭lfs
+git lfs uninstall
 ~~~
 
 

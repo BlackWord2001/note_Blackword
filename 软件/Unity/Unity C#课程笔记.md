@@ -654,4 +654,65 @@ private void OnAnimatorIK(int layerIndex)
 }
 ~~~
 
-## 导航网格
+## 导航寻路
+
+### 导航网格 
+
+导航网格（即 Navigation Mesh，缩写为 NavMesh）是一种数据结构，用于描述游戏世界的可行走表面，并允许在游戏世界中寻找从一个可行走位置到另一个可行走位置的路径。该数据结构是从关卡几何体自动构建或烘焙的。
+
+我们可以这么理解：它是unity官方自带的一种寻路系统。我们可以通过它来制作简单的寻路，比如可以制作点击某个位置，让角色自动的绕开障碍走到目标点的效果，比如可以制作敌人AI，让它可以通过NavMesh绕开障碍追击我方单位。甚至可以在NavMesh中设置传送门，跳跃的起点落点，让这些效果也参与寻路的计算，成功计算出导航的捷径。
+
+在烘焙导航网格之前需要把作为障碍物以及地面的物体开启 `Navigation Static` 选项。
+
+![image](./images/NavMeshAgent-1.png)
+
+之后在菜单栏中 `窗口` > `AI` > `导航`中的（bake）烘焙。
+
+![image](./images/NavMeshAgent-2.png)
+
+接下面我们要在名为`player`的一个胶囊体上挂载 `Nav Mesh Agent` 组件具体看图：`NavMeshAgent-3`。
+
+代理类型默认为`Humanoid`，这个选项是我们可以自己新建的就在`窗口` > `AI` > `导航` > `代理`中。（具体看图`NavMeshAgent-4`）
+
+![image](./images/NavMeshAgent-3.png) | ![image](./images/NavMeshAgent-4.png)
+:-: | :-:
+NavMeshAgent-3 | NavMeshAgent-4
+
+接下来我们要通过脚本来实现，通过鼠标点击位置来让胶囊体移动到指定位置。
+
+~~~cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class PlayerControl4 : MonoBehaviour
+{
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        // 获取代理组件
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 获取点击位置
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 点击位置
+                Vector3 point = hit.point;
+
+                // 设置该位置为导航目标点
+                agent.SetDestination(point);
+            }
+        }
+    }
+}
+~~~
