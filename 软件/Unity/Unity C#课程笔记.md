@@ -716,3 +716,18 @@ public class PlayerControl4 : MonoBehaviour
     }
 }
 ~~~
+
+### 导航网格障碍物 (Nav Mesh Obstacle)
+导航网格障碍物 (Nav Mesh Obstacle) 组件允许您描述导航网格代理在世界中导航时应避开的移动障碍物（例如，由物理系统控制的木桶或板条箱）。当障碍物正在移动时，导航网格代理会尽力避开它。当障碍物静止时，它会在导航网格中雕刻一个孔。导航网格代理随后将改变它们的路径以绕过障碍物，或者如果障碍物导致路径被完全阻挡，则寻找其他不同路线。
+
+![image](./images/NavMeshObstacle-1.png)
+
+### 网格外链接 (Off Mesh Link)
+
+OffMeshLink 组件允许您合并无法使用可行走表面来表示的导航捷径。例如，跳过沟渠或围栏，或在通过门之前打开门，全都可以描述为网格外链接。
+
+![image](./images/OfMeshLink-1.png)
+
+我们使用两个压扁的cube作为跳板位置，在其中一个Cube上挂载Off Mesh Link这个组件
+
+![image](./images/OfMeshLink-2.png)
