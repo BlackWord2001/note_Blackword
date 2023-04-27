@@ -1,4 +1,4 @@
-# git使用指南
+# <center>git使用指南</center>
 
 ## <b>Git基本设置</b>
 
@@ -315,3 +315,21 @@ git push -u origin master
 core.autocrlf是一个Git变量，用于处理行结束符。它可以设置为三个值：true、input和false。如果你在Windows上使用Git，可以将其设置为true，以便在签出代码时将LF转换为CRLF。如果你在Mac或Linux上使用Git，则可以将其设置为input，以便在签出代码时不进行自动转换。你可以使用以下命令来设置core.autocrlf：git config --global core.autocrlf true。
 `git config --global core.autocrlf true`
 
+# <center>仓库创建</center>
+
+## 从命令行创建一个新的仓库
+~~~shell
+touch README.md
+git init
+git checkout -b main
+git add README.md
+git commit -m "first commit"
+git remote add origin http://192.168.0.114:3000/JAZZ/ChenGuang.git
+git push -u origin main
+~~~
+
+## 从命令行推送已经创建的仓库
+~~~shell
+git remote add origin http://192.168.0.114:3000/JAZZ/ChenGuang.git
+git push -u origin main
+~~~

@@ -731,3 +731,25 @@ OffMeshLink 组件允许您合并无法使用可行走表面来表示的导航�
 我们使用两个压扁的cube作为跳板位置，在其中一个Cube上挂载Off Mesh Link这个组件
 
 ![image](./images/OfMeshLink-2.png)
+
+### 导航区域
+
+1. 首先新建一个名为Water（水）
+
+    ![image](./images/NavMeshAgent-5.png)
+
+2. 新建一个cube作为水的区域大小
+
+    ![image](./images/NavMeshAgent-6.png)
+
+3. 选中我们上面新建的cube到 `导航` > `对象` > `Navigation Area` 中选择我们在第一步新建的Water，然后再重新烘焙；
+
+    ![image](./images/NavMeshAgent-7.png)
+
+4. 我们运行游戏就会发现我们的胶囊体玩家就会主动绕开Water水的区域，但是如果穿越water的开销比绕路更低的时候胶囊提会毫不犹豫的穿过water区域。
+<br>
+5. 如果我们只想让玩家或者NPC或怪物在指定区域行动而避开比如water区域，只需要在玩家或者怪物的`Nav Mesh Agent`组件下的`区域遮罩`中关闭`Water`，这样不管怎么样我们的玩家或NPC就完全不会踏足这片区域了。
+
+    ![image](./images/NavMeshAgent-8.png)
+
+    
