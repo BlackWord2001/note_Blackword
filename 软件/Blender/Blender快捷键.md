@@ -1,13 +1,14 @@
 ![logo](./images/blender_logo.png)
-# Blender使用笔记
+# <center>Blender 快捷键笔记</center>
 ## 3D视图快捷键
 
 |快捷键|功能名称
 |:---|:---
 |<kbd>Ctrl</kbd>+<kbd>.|切换-原点模式
+|<kbd>Alt</kbd> | 1. 长按Alt可以批量编辑如多个物体参数
 
 ## 节点编辑器(Shader Editor)快捷键
-> 部分功能需要使用`node Wrangler`插件。<br>
+> 部分功能需要使用`node Wrangler`插件。
 > LMB(鼠标左键)，RMB(鼠标右键)，MMB（鼠标中键）
 
 |快捷键|功能名称
@@ -29,7 +30,7 @@
 ## 大纲视图技巧
 |操作|作用|
 |:---|:---|
-|<kbd>LMB</kbd>+<kbd>Shift</kbd>|直接绑定父子级|
+|<kbd>Shift</kbd>|鼠标拖拽的时候长按Shift快速绑定父子级|
 
 ## 属性面板
 |操作|作用|

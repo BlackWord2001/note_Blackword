@@ -15,3 +15,19 @@
 
 `ffmpeg -i input.mp3 -ss 00:00:xx -t 120 output.mp3`
 + -ss 裁剪时间，后跟裁剪开始时间，以及 -t 裁剪时间；
+
+## 提取音轨
+
+~~~shell
+ffmpeg -i input.mp4 -vn -acodec copy output.aac
+~~~
+
+其中，-i 表示输入文件，input.mp4 是您要提取音轨的视频文件名。-vn 表示不包含视频流，只包含音频流。-acodec copy 表示直接复制音频流，不进行重新编码。output.aac 是输出文件名。
+
+## 合并音轨
+
+~~~shell
+ffmpeg -i input.mp4 -i input.aac -c:v copy -c:a copy output.mp4
+~~~
+
+其中，-i 表示输入文件，input.mp4 是您要添加音轨的视频文件名，input.aac 是您要添加的音轨文件名。-c:v copy 表示直接复制视频流，不进行重新编码。-c:a copy 表示直接复制音频流，不进行重新编码。output.mp4 是输出文件名。
