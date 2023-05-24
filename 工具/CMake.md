@@ -138,6 +138,39 @@ include(<file|module> [OPTIONAL] [RESULT_VARIABLE <var>]
 ```
 虽然，有不少的可选参数，但是一般情况下，都是直接写：
 
-```camke
+```cmake
 include(file|module)
+```
+
+# 一些踩坑记录
+
+## Vscode cmake-tools 无法使用clang编译
+
+当在**vscode**使用`cmake-tools`插件的时，并且使用`clang`编译器提示如：
+
+> Unable to determine what CMake generator to use. Please install or configure a preferred generator, or update settings.json, your Kit configuration or PATH variable. 
+
+> 无法确定要使用的CMake生成器。请安装或配置首选生成器，或更新settings.json、Kit配置或PATH变量。
+
+1. 遇到以上提示请检查是否有安装`ninja`构建系统，在终端输入 `ninja` 或 `ninja --version` 检查是否有安装该软件。
+
+2. 如果没有请先安装`ninja`构建系统，linux下应该直接使用包管理工具安装即可，windows下需要去下载 `ninja` 的二进制安装包然后将其手动添加到环境变量。
+
+    ninja官网：https://ninja-build.org/
+
+3. 安装完后重启vscode，删除之前cmake生成的文件重新配置即可。
+
+### 如果还是不行就尝试以下修改
+
+（Ctrl + Shift + P），然后输入“CMake: Edit User-Local CMake Kits”并按Enter。这将打开一个JSON文件，其中包含有关您的CMake工具链的信息。您可以在此文件中添加以下内容：
+
+```json
+{
+    "name": "Clang",
+    "compilers": {
+        "C": "clang",
+        "CXX": "clang++"
+    },
+    "generator": "ninja"
+}
 ```
