@@ -124,9 +124,9 @@ project(hellocmake LANGUAGES C CXX)
 ```
 
 # CMake 模块
-说到cmake，可能最先想到的就是CmakeLists.txt文件，但是在很多情况下，也会看到.cmake文件。也许，你会诧异，.cmake文件是干什么的，甚至会想.cmake文件是不是cmake的正统文件，而CmakeLists.txt并不是。
+说到cmake，可能最先想到的就是CmakeLists.txt文件，但是在很多情况下，也会看到.cmake文件。也许，你会诧异，.cmake文件是干什么的，甚至会想.cmake文件是不是cmake的正统文件，而CMakeLists.txt并不是。
 
-但其实，CmakeLists.txt才是cmake的正统文件，而.cmake文件是一个模块文件，可以被include到CMakeLists.txt中。
+但其实，CMakeLists.txt才是cmake的正统文件，而.cmake文件是一个模块文件，可以被include到CMakeLists.txt中。
 
 include指令一般用于语句的复用，也就是说，如果有一些语句需要在很多CMakeLists.txt文件中使用，为避免重复编写，可以将其写在.cmake文件中，然后在需要的CMakeLists.txt文件中进行include操作就行了。
 
