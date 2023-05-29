@@ -174,3 +174,64 @@ include(file|module)
     "generator": "ninja"
 }
 ```
+
+## 在终端指令中使用cmake编译
+
+> 在使用Ninja和clang之前请先按照他们两个软件并添加到系统环境变量中。
+
+如果我们直接使用 `cmake -B build` 生成中还是使用MSBuild和MSVC编译器构建的。
+
+```shell
+PS C:\Users\black\Desktop\VimLearn\learn1> cmake -B build
+-- Selecting Windows SDK version 10.0.22000.0 to target Windows 10.0.22621.
+-- The C compiler identification is MSVC 19.36.32532.0
+-- The CXX compiler identification is MSVC 19.36.32532.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.36.32532/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.36.32532/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (2.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: C:/Users/black/Desktop/VimLearn/learn1/build
+PS C:\Users\black\Desktop\VimLearn\learn1> rm -r build
+PS C:\Users\black\Desktop\VimLearn\learn1> ls
+```
+
+这时候我们需要在这串命令后面加上 `-G` 参数如下：
+
+```shell
+# 使用 Ninja 构建系统
+cmake -B build -GNinja
+```
+
+这时候就能发现 cmake 开始调用系统中的 `clang`和`clang++`
+
+```shell
+PS C:\Users\black\Desktop\VimLearn\learn1> cmake -B build -GNinja
+-- The C compiler identification is Clang 16.0.4 with GNU-like command-line
+-- The CXX compiler identification is Clang 16.0.4 with GNU-like command-line
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/LLVM/bin/clang.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/LLVM/bin/clang++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (1.8s)
+-- Generating done (0.0s)
+-- Build files have been written to: C:/Users/black/Desktop/VimLearn/learn1/build
+```
+
+其他方法，如果cmake并没有使用clang（暂时还没测试过）
+```shell
+cmake -B build -GNinja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+```
