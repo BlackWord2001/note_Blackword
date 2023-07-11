@@ -146,3 +146,8 @@ end
 
 
 对于像 `gameObject.name` 这样的属性，你可以将其视为一个只读属性，然后像上面那样记录它。
+```
+
+- awdd
+- awda
+	- awd

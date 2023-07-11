@@ -66,3 +66,8 @@ A | Smoothness 贴图 （光滑）
 ![image](./images/maskmap_2.jpg)
 
 ![image](./images/maskmap_3.jpg)
+
+## 阴影距离
+在通用渲染管线 (URP) 中，请在通用渲染管线资源中设置 Shadow Distance 属性。
+
+在高清渲染管线 (HDRP) 中，请为每个体积 (Volume) 设置 Shadow Distance 属性。
