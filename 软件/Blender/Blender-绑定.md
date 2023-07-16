@@ -34,3 +34,4 @@ Naming Conventions 命名习惯，在Blender命名习惯不仅仅是用于找到
     "-" (dash): hand-l --> hand-r
 
     " "（空格): 手向左 --> 手向右
+
