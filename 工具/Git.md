@@ -62,12 +62,23 @@
 > 如果拉取遇到错误，可以先将当前的内容存储起来，`git stash`就可以把当前内容存储在栈内
 > `git stash list` 可以查看临时存储栈内的列表
 
-
 ## <b>分支</b>
 
-创建分支  
-` git branch [分支名称] `  
-`git checkout -b [分支名称]` → 创建新分支并立即切换过来,一步到位.
+↓ 创建分支  
+```shell
+# 创建新分支
+git branch [分支名称]
+
+# 创建新分支并立即切换过来,一步到位.
+git checkout -b [分支名称]
+
+# 从某次提交中创建分支
+git branch [分支名称] [commit]
+git checkout -b [分支名称] [commit]
+# 从某次提交中创建分支-具体用法
+git branch dev1 7f65b72a08caa8d1b7969e1b385bea5b43f924ac
+git checkout -b dev1 7f65b72a08caa8d1b7969e1b385bea5b43f924ac
+```
 
 查看分支  
 ` git branch ` → 本地分支  
@@ -80,13 +91,14 @@
 切换分支  
 ` git checkout [分支名称] `
 
-切换到主分支  
-` git checkout master `
 
 ## 合并分支  
 ` git merge [分支名称] `
+
 ` git merge --no-ff [分支名称] `（推荐使用）
+
 `--no-ff` 在这的作用是禁止快进式合并；从合并后的代码来看，结果其实是一样的，区别就在于 `--no-ff` 会让 Git 生成一个新的提交对象。为什么要这样？通常我们把 master 作为主分支，上面存放的都是比较稳定的代码，提交频率也很低，而 feature 是用来开发特性的，上面会存在许多零碎的提交，快进式合并会把 feature 的提交历史混入到 master 中，搅乱 master 的提交历史。所以如果你根本不在意提交历史，也不爱管 master 干不干净，那么 `--no-ff` 其实没什么用。不过，如果某一次 master 出现了问题，你需要回退到上个版本的时候，比如上例，你就会发现退一个版本到了 B，而不是想要的 F，因为 feature 的历史合并进了 master 里。
+
 ~~~
 // git merge
 
@@ -101,18 +113,13 @@ D---E---F
 D---E---F-----------G master
 ~~~
 
-# 打包为zip和tar
-
-~~~ shell
-// 打包master分支的所有文件
-git archive --format=zip --output master.zip master
-~~~
 
 ###  ❌解决合并冲突
 **二选一方法**
 + 保留本地代码：`git checkout --ours fileName`
 + 保留合并分支代码： `git checkout --theirs fileName`
-> 相当于，在发生冲突的时候，–ours和–theirs会选择保留策略，执行完之后，git add 即可，不会再有任何冲突。
+
+相当于，在发生冲突的时候，–ours和–theirs会选择保留策略，执行完之后，git add 即可，不会再有任何冲突。
 
 ## 拉取远程分支到本地
 1. **方法一：git checkout targetbranch**
@@ -172,13 +179,35 @@ git remote prune origin
 
 `git reset --hard 91a90dbd831a31646c0f0eac897d470e81d53e7f`回退到某个暂存区版本  
 
+## 放弃文件修改
+
+↓ 此命令用来放弃掉所有还没有加入到缓存区（就是 git add 命令）的修改：内容修改与整个文件删除
+```shell
+git checkout .
+```
+
+
+↓ 此命令用来清除 git 对于文件修改的缓存。相当于撤销 git add 命令所在的工作。在使用本命令后，本地的修改并不会消失，而是回到了第一步1. 未使用git add 缓存代码，继续使用用`git checkout .`，就可以放弃本地修改。
+```shell
+git reset HEAD
+```
+
 ## git stash 命令
 
 就在此时，线上版本master出现了bug，我们应该放下手头上新功能的开发工作先将master上的bug修复，这个时候dev分支下的改动怎么处理？ - 向dev分支提交新功能的代码，然后再切换到master下 - 直接切换到master分支下
 
 首先我们新功能的代码还没开发完成，其次新功能这里还有一些bug没解决，就这样把有问题的代码提交到dev分支中，虽然可以解决目前我们的处境但不是很妥；但是第二种方案，直接切换，明显更不妥。怎么办？我们好像陷入了困境……
 
-Git提供了一个**git stash命令**恰好可以完美解决该问题, 其将当前未提交的修改(即，工作区的修改和暂存区的修改)先暂时储藏起来，这样工作区干净了后，就可以切换切换到master分支下拉一个fix分支。在完成线上bug的修复工作后，重新切换到dev分支下通过**git stash pop**命令将之前储藏的修改取出来，继续进行新功能的开发工作
+Git提供了一个**git stash 命令**恰好可以完美解决该问题, 其将当前未提交的修改(即，工作区的修改和暂存区的修改)先暂时储藏起来，这样工作区干净了后，就可以切换切换到master分支下拉一个fix分支。在完成线上bug的修复工作后，重新切换到dev分支下通过**git stash pop**命令将之前储藏的修改取出来，继续进行新功能的开发工作
+
+↓ 具体用法
+
+    # 储藏
+    git stash
+
+    # 将之前储藏的修改取出来
+    git stash pop
+
 
 ## .gitignore 文件
 设置Git忽略的文件，这些文件不参与Git库的提交与管理。
@@ -332,4 +361,11 @@ git push -u origin main
 ~~~shell
 git remote add origin http://192.168.0.114:3000/JAZZ/ChenGuang.git
 git push -u origin main
+~~~
+
+# 打包为zip和tar
+
+~~~ shell
+// 打包master分支的所有文件
+git archive --format=zip --output master.zip master
 ~~~
