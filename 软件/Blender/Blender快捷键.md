@@ -6,6 +6,7 @@
 |:---|:---
 |<kbd>Ctrl</kbd>+<kbd>.|切换-原点模式
 |<kbd>Alt</kbd> | 1. 长按Alt可以批量编辑如多个物体参数
+|<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>LMB</kbd> | 当很多物体重叠时可以通过这个菜单选择光标附近的物体
 
 ## 节点编辑器(Shader Editor)快捷键
 > 部分功能需要使用`node Wrangler`插件。
