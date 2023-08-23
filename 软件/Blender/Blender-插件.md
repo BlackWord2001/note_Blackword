@@ -10,3 +10,4 @@
 |TexTools|UV编辑|https://github.com/SavMartin/TexTools-Blender
 |RetopoFlow|网格拓扑|https://github.com/CGCookie/retopoflow
 |Rigacar|汽车类模型绑定|https://github.com/digicreatures/rigacar    
+|Bone Manager|骨骼管理器|https://fin.gumroad.com/l/STdb
