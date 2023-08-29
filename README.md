@@ -1,22 +1,3 @@
 # 黑字的笔记
 
-笔记存主要托管在**gitlab**上
-
-个人学习工作笔记排序比较乱
-
-### 按照文件夹分类
-
-~~~
-├─Linux
-├─工具
-├─编程语言与命令
-│  ├─C++
-│  └─RUST-lang
-└─软件
-    ├─Blender
-    ├─Krita
-    ├─Substance
-    ├─Unity
-    ├─Unreal Engine
-    └─代码编辑器
-~~~
+笔记存主要托管在**gitlab**上，建议使用Obsidian或者VSCode打开此笔记。
