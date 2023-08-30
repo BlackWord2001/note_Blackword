@@ -136,7 +136,7 @@ __多选__
 
 ![视图细分简化](./Images/隐藏网格-6.png)
 
-最后按下 <kbd>Shift</kbd> + <kbd>H</kbd> 除了刚刚选中的部分其他都隐藏了。
+最后按下 <kbd>Shift</kbd> + <kbd>H</kbd> 隐藏未选中的网格。
 
 ![视图细分简化](./Images/隐藏网格-7.png)
 
