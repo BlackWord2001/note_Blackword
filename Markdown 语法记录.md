@@ -157,3 +157,18 @@ end
 - [x] Write the press release
 - [ ] Update the website
 - [ ] Contact the media 
+
+## 折叠
+
+<markdown>
+<details open>
+<summary>Summary...</summary>
+<markdown>
+- Embedded
+- _Markdown_
+</markdown>
+</details>
+
+## 文件跳转
+
+[添加对象](绝对路径)

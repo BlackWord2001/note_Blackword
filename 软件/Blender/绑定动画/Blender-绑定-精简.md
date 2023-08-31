@@ -97,7 +97,7 @@ Naming Conventions 命名习惯，在Blender命名习惯不仅仅是用于找到
 
 Blender自带的骨骼层比较老显得不那么直观，所以当前版本我会使用（Bone manger）插件拓展和提升我们工作的效率
 
-插件获取地址：https://fin.gumroad.com/l/STdb
+插件下载地址请查看：[Blender-插件.md](../Blender-插件.md)
 
 ![BoneManger](./Images/BoneManager-1.png)
 
