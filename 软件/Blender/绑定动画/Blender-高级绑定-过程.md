@@ -118,12 +118,27 @@ THUMB | 拇指
 
 ![图像](./Images/高级绑定-18.png)
 
-从（TGT-HIPS）骨骼沿着Y轴挤出一条名为（CTRL-TORSO）
+从（TGT-HIPS）骨骼沿着Y轴挤出一条名为（CTRL-TORSO） 
 
 ![图像](./Images/高级绑定-19.png)
 
-新建一个层把他命名为 _TORSO_ 将（CTRL-TORSO）放到这个新建的层中
+新建一个层把他命名为（TORSO）将（CTRL-TORSO）放到这个新建的层中
 
 ![图像](./Images/高级绑定-20.png)
 
-复制一根TGT-HIPS骨骼并命名为（CTRL-HIPS）
+复制一根（TGT-HIPS）骨骼并命名为（CTRL-HIPS）用来作为臀部控制，然后选中这根骨骼并使用快捷键 <kbd>Alt</kbd> - <kbd>F</kbd> 来反转他，并把将（CTRL-HIPS）使用设置为 （CTRL-TORSO）的子级。
+
+![图像](./Images/高级绑定-21.png)
+
+再拉出一根名为（CTRL-CHEST）的骨骼用来控制我们胸部或躯干整个上半部分，也设置为CTRL-TORSO的子集。
+
+![图像](./Images/高级绑定-22.png)
+
+把其他层的骨骼都给隐藏只留下TORSO层最后效果如下
+
+![图像](./Images/高级绑定-23.png)
+
+
+↓ 骨骼父子关系如下
+
+![图像](./Images/高级绑定-24.png)
