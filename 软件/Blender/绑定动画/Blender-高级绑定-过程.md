@@ -2,7 +2,7 @@
 
 高级绑定课程对blender基础有一定要求，建议能熟练使用blender后再看高级绑定课程，否测很多操作可能会看不懂。
 
-## 01 增加基础骨骼
+## 01 Deformation skeleton
 
 __骨骼名称中英文对照表__
 
@@ -54,7 +54,7 @@ THUMB | 拇指
 :---: | :---:
 ![图像](./Images/高级绑定P01-1.png) | ![图像](./Images/高级绑定P01-6.png)
 
-## 02 骨骼分类
+## 02 骨骼管理器
 
 接下来就要使用（Bone Manager）插件对骨骼进行分类管理，
 
@@ -64,7 +64,7 @@ THUMB | 拇指
 
 ![图像](./Images/高级绑定P01-7.png)
 
-## 03 TGT骨骼
+## 03 Assigning armature
 
 因为绑定的模型可能会导入游戏引擎所以TGT骨骼是专门用来专门控制DEF骨骼的，相当于是一层控制器。
 
@@ -154,4 +154,35 @@ THUMB | 拇指
 
     ![图像](./Images/高级绑定-26.png)
 
-2. 
+2. 先选中 _CTRL-CHEST_ 再加选 _TGT-SPINE_ ，<kbd>Ctrl</kbd> - <kbd>Shift</kbd> - <kbd>C</kbd> → [ __Copy Rotation__ ](https://docs.blender.org/manual/zh-hans/3.6/animation/constraints/transform/copy_rotation.html) 
+
+    - 目标和拥有者都设置为（局部空间）
+    - Mix设置为（相加），或者用（偏移）也可以
+
+    以上步骤设置完后就可以使用 _CTRL_SPINE_ 控制 _TGT_SPINE_ 了，_TGT_SPINE_ 也可以单独进行旋转。
+
+    ![图像](./Images/高级绑定-27.png)
+
+    如果没有把Mix设置为（相加）_TGT_SPINE_ 就无法单独旋转。
+
+    ![图像](./Images/高级绑定-28.png)
+
+3. 先选中 _CTRL-CHEST_ 再加选 _TGT-CHEST_ ，<kbd>Ctrl</kbd> - <kbd>Shift</kbd> - <kbd>C</kbd> → [ __Copy Rotation__ ](https://docs.blender.org/manual/zh-hans/3.6/animation/constraints/transform/copy_rotation.html)
+
+    ![图像](./Images/高级绑定-29.png)
+
+    最终效果就是只需要旋转 _CTRL_SPINE_ 就能同时控制 _TGT-SPINE_ 和 _TGT-CHEST_
+
+    ![图像](./Images/高级绑定-30.png)
+
+4. 最后一步我们要来修改骨骼的名称，因为 _TGT_CHEST_ 和 TGT_SPINE 可以直接允许控制腰部胸部的旋转所以我们也给他改名并归类为 CTRL。
+   
+    - _TGT_CHEST_ → _CTRL_TWEAKS_CHEST_
+    - _TGT_SPINE_ → _CTRL_TWEAKS_SPINE_
+
+    以上两根骨骼名称修改完后，再将其分类进 _TORSO_ 骨骼层
+
+    ![图像](./Images/高级绑定-31.png)
+
+## 05 头部和颈部
+
