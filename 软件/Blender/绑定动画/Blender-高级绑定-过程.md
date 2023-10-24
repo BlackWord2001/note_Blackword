@@ -39,12 +39,12 @@ THUMB | 拇指
 
 ↓ 手指
 
-![图像](./Images/高级绑定P01-4.png)
+![图像 | 300](./Images/高级绑定P01-4.png)
 
 ↓ ROOT骨骼
 
 > 绑定时一定要注意骨骼坐标轴的朝向，Z轴永远朝上或者朝前。
-![图像](./Images/高级绑定P01-5.png)
+![图像 | 300](./Images/高级绑定P01-5.png)
 
 
 ↓ DEF骨骼最后完成的样子
@@ -185,4 +185,44 @@ THUMB | 拇指
     ![图像](./Images/高级绑定-31.png)
 
 ## 05 头部和颈部
+
+开始前先打开骨骼的线框显示模式，有利于制作时候的观察！
+
+![图像](./Images/高级绑定-33.png)
+
+在BoneLayers插件面板中先创建一个名为“MCH”的骨骼层，接下来我们创建的MCH开头的骨骼就给他全放在这个层中。
+
+从脖子下方拉出一根骨骼命名未 “MCH-NECK-ROT”
+
+![图像](./Images/高级绑定-32.png)
+
+再复制一根“MCH-NECK-ROT”骨骼缩小后改名为“MCH-NECK-INT-ROT”
+
+![图像](./Images/高级绑定-34.png)
+
+将 “MCH-NECK-INT-ROT” 骨骼设置为 "CTRL-TORSO" 的子级
+
+![图像](./Images/高级绑定-35.png)
+
+再把脖子的控制骨骼 "TGT-NECK" 设置为 "MCH-NECK-INT-ROT" 的子级
+
+![图像 ](./Images/高级绑定-36.png)
+
+先选中 "MCH-NECK-ROT" 再加选  "MCH-NECK-INT-ROT" 然后按下快捷键 <kbd>CTRL</kbd> - <kbd>SHIFT</kbd> - <kbd>C</kbd> 添加骨骼约束
+
+![图像 ](./Images/高级绑定-37.png)
+
+再给其中的 "Copy Rotation" 约束改名为 "Copy Rotation-NECK-FOLLOW" 方便辨认
+
+![图像 ](./Images/高级绑定-38.png)
+
+接下来就是确认 “MCH-NECK-ROT” 的父级是 “CTRL_TWEAKS_CHEST”，如果不是就将他设置为父级。
+
+![图像 ](./Images/高级绑定-39.png)
+
+现在旋转我们的 “CTRL-CHEST” 还没什么效果，我们只需要把脖子骨骼的的 "Copy Rotation-NECK-FOLLOW" 约束下的影响设置为 "0" 就可以了。
+
+![图像 ](./Images/高级绑定-40.png)
+
+然后我们就能做到无论身体怎么旋转，头部始终都是朝着上方屹立不倒。
 
