@@ -7,6 +7,14 @@
 + image2 表示输入或输出文件的格式是image2格式
 + -f 是 format 格式的意思
 
+## 修改分辨率
+
+如果是宽高都缩放到原始图片的一半，则可以是乘以 0.5 或 除以 2，像下面这样写：
+
+```shell
+ffmpeg -i input.jpg -vf "scale=iw*.5:ih*.5" input_half_size.png
+ffmpeg -i input.jpg -vf "scale=iw/2:ih/2" input_half_size.png
+```
 ## 剪辑
 简单裁剪视频<br>
 `ffmpeg -i input.mp4 -ss 01:36 -to 01:45 output.mp4 `
