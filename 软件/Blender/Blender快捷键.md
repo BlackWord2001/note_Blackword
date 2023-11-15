@@ -48,3 +48,4 @@
 :---|:---|
 <kbd>Ctrl</kbd> - <kbd>R</kbd> | 可以扭转（滚动）骨骼
 <kbd>Alt</kbd> - <kbd>F</kbd> | 反转骨骼
+<kbd>Ctrl</kbd> - <kbd>Alt</kbd> - <kbd>A</kbd> | 对齐骨骼
