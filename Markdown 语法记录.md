@@ -95,7 +95,7 @@ end
 
 ## 图片并排
 
-![image](./images/1.png) | ![image](./images/2.png)
+![image](1.png) | ![image](2.png)
 ---|---
 
 ## 图片大小
