@@ -6,6 +6,7 @@
 |<kbd>M|镜像
 |<kbd>Ctrl</kbd>+<kbd>T</kbd>|变换工具
 |<kbd>Ctrl</kbd>+<kbd>Y</kbd>|
+|<kbd>V</kbd> | 直线工具
 
 # 个人习惯设置
 
