@@ -369,3 +369,9 @@ git push -u origin main
 // 打包master分支的所有文件
 git archive --format=zip --output master.zip master
 ~~~
+
+# Git reset和git revert的区别
+
++ git reset 是回滚到对应的commit-id，相当于是删除了commit-id以后的所有的提交，并且不会产生新的commit-id记录，如果要推送到远程服务器的话，需要强制推送-f
+
++ git revert 是反做撤销其中的commit-id，然后重新生成一个commit-id。本身不会对其他的提交commit-id产生影响，如果要推送到远程服务器的话，就是普通的操作git push就好了
