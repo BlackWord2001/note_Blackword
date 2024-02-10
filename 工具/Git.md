@@ -375,3 +375,13 @@ git archive --format=zip --output master.zip master
 + git reset 是回滚到对应的commit-id，相当于是删除了commit-id以后的所有的提交，并且不会产生新的commit-id记录，如果要推送到远程服务器的话，需要强制推送-f
 
 + git revert 是反做撤销其中的commit-id，然后重新生成一个commit-id。本身不会对其他的提交commit-id产生影响，如果要推送到远程服务器的话，就是普通的操作git push就好了
+
+# 中文路径乱码或被数字代替
+
+~~~ shell
+git config --global core.quotepath false
+~~~
+
+这个命令是用来设置Git的全局配置，使得Git在处理含有非ASCII字符的路径时不进行URL编码。core.quotePath选项默认值为true，表示对非ASCII字符进行编码。设置为false则表示不进行编码。
+
+在某些操作系统或者终端环境中，如果文件名包含非ASCII字符或特殊字符，Git可能会自动对这些字符进行URL编码，这可能会导致问题。例如，在Windows系统中，如果文件名包含空格或引号，这些字符在Git中可能被错误地处理。设置core.quotePath为false可以避免这个问题。
