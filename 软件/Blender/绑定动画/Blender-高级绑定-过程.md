@@ -927,5 +927,7 @@ Z | Y | X | Euler
 
 ![图片](./Images/高级绑定302-1.webp)
 
+再复制出一根 `CTRL-TORSO` 骨骼命名为名为 `CTRL-HIPS`，然后再将 `CTRL-HIPS` 的父级设置为 `CTRL-TORSO`。
 
+![图片](./Images/高级绑定302-2.webp)
 
