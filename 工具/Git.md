@@ -3,10 +3,25 @@
 ## <b>Git基本设置</b>
 
 设置名称和邮箱  
-`git config --global user.name "名称"`  
-`git config --global user.email 邮箱 `  
+
+```shell
+git config --global user.name "名称"
+git config --global user.email "邮箱"
+```
+
+查看名称和邮箱
+
+```shell
+git config user.name "名称"
+git config user.email "邮箱"
+```
+
 添加一个远程仓库地址链接  
-` git remote add origin https://地址 `
+
+``` shell
+git remote add origin https://地址
+```
+
 
 ## <b>Git基本命令</b>
 
