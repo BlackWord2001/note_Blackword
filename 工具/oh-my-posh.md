@@ -1,6 +1,27 @@
 # ohmyposh 配置
 
-## windows
+## windows 安装
+
+安装指令
+
+~~~ bash
+winget install JanDeDobbeleer.OhMyPosh -s winget
+~~~
+
+如果winget安装 Oh My Posh 卡住无法下载也可以直接去他的github链接下载
+
+~~~bash
+PS C:\Users\admin> winget install JanDeDobbeleer.OhMyPosh -s winget
+Found Oh My Posh [JanDeDobbeleer.OhMyPosh] Version 19.11.4
+This application is licensed to you by its owner.
+Microsoft is not responsible for, nor does it grant any licenses to, third-party packages.
+Downloading https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v19.11.4/install-amd64.exe
+~~~
+
+以上是执行了安装指令后我们可以看到它的下载地址实际是github上下载的，我们直接提取这串链接到浏览器或者下载器就可以把文件下载下来。
+~~~
+https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v19.11.4/install-amd64.exe
+~~~
 
 ### 主题安装
 编辑启动文件
@@ -12,6 +33,8 @@ code $PROFILE
 设置主题如下：
 ```shell
 oh-my-posh init pwsh --config 'D:/oh-my-posh-Themes/froczh.omp.json' | Invoke-Expression
+
+cls
 ```
 但是出现如下报错
 
