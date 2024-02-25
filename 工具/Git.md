@@ -236,15 +236,13 @@ Git提供了一个**git stash 命令**恰好可以完美解决该问题, 其将�
 /build/   #忽略build下所有的文件
 ```
 
-设置代理
+## 设置代理
+
+如下代码是设置代理的方案，但是IP地址需要看个人情况一般是 `本机IP:VPN端口号`。
+
 ```shell
-# 设置http:
-git config --global http.proxy http://127.0.0.1:1080
-# 设置https:
-git config --global https.proxy https://127.0.0.1:1080
-# 设置socks:
-git config --global http.proxy 'socks5://127.0.0.1:1080'
-git config --global https.proxy 'socks5://127.0.0.1:1080'
+git config --global http.proxy 'http://192.168.0.1:1080'
+git config --global https.proxy 'http://192.168.0.1:1080'
 ## 取消
 git config --global --unset http.proxy
 git config --global --unset https.proxy
