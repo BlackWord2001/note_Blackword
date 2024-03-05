@@ -931,3 +931,62 @@ Z | Y | X | Euler
 
 ![图片](./Images/高级绑定302-2.webp)
 
+从尾部拉出如下两根骨骼，并顺便用<kbd>Alt</kbd> - <kbd>P</kbd> 清空这两根骨骼的父级。
+
+![图片](./Images/高级绑定302-3.webp)
+
+然后如下图将如下骨骼 <kbd>Ctrl</kbd> - <kbd>P</kbd> 设置父级
+
+<center> 1 </center>
+
+![图片](./Images/高级绑定302-4.webp)
+
+<center> 2 </center> 
+
+![图片](./Images/高级绑定302-5.webp)
+
+接下来再创建如图位置的三根骨骼
+
+![图片](./Images/高级绑定302-6.webp)
+
+分别命名为 `MCH-HIPS` `MCH-INT-HIPS` `CTRL-TWEAK-HIPS`
+
+![图片](./Images/高级绑定302-7.webp)
+
+再将 `MCH-HIPS` 设置为 `CTRL-HIPS` 的子集
+
+![图片](./Images/高级绑定302-8.webp)
+
+然后把 `MCH-INT-HIPS` `CTRL-TWEAK-HIPS` 设置为 `CTRL-TORSO` 的子集
+
+![图片](./Images/高级绑定302-9.webp)
+
+先选中 `MCH-HIPS` 再 `MCH-INT-HIPS` 然后添加骨骼约束>选择复制变换
+
+![图片](./Images/高级绑定302-10.webp)
+
+然后将影响设置为 `0.5`
+
+![图片](./Images/高级绑定302-10.5.webp)
+
+把 `MCH-INT-HIPS` 设置为 `CTRL-TWEAK-HIPS` 的父级
+
+![图片](./Images/高级绑定302-11.webp)
+
+`TGT-SPINE01` 设置为 `CTRL-TWEAK-HIPS` 的子集
+
+![图片](./Images/高级绑定302-12.webp)
+
+给 `TGT-HIPS` 添加骨骼约束
+
+![图片](./Images/高级绑定302-13.webp)
+
+再对 `TGT-SPINE01` 添加相同的骨骼约束
+
+![图片](./Images/高级绑定302-14.webp)
+
+再把 `TGT-SPINE02` 绑定为  `CTRL-TORSO` 的子集
+
+![图片](./Images/高级绑定302-15.webp)
+
+看到11分20秒
