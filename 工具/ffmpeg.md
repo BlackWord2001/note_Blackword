@@ -39,3 +39,14 @@ ffmpeg -i input.mp4 -i input.aac -c:v copy -c:a copy output.mp4
 ~~~
 
 其中，-i 表示输入文件，input.mp4 是您要添加音轨的视频文件名，input.aac 是您要添加的音轨文件名。-c:v copy 表示直接复制视频流，不进行重新编码。-c:a copy 表示直接复制音频流，不进行重新编码。output.mp4 是输出文件名。
+
+## 压缩码率
+
+```shell
+ffmpeg -i Desktop/1.mov -b:v 1.5M  Desktop/1.mp4
+```
+
+- -b:v 1.5M : 指定码率
+- -b:v :指定视频的码率
+- -b:a : 指定音频的码率
+- 1.5M：码率的值 1.5M 表示 1.5Mb/s
