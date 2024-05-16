@@ -51,6 +51,19 @@ Driver-1 | Driver-2 | bone-7
 :---: | :---: | :---:
 ![image](./Images/Driver-1.png) | ![image](./Images/Driver-2.png) | ![image](./Images/bone-7.png)
 
+## 驱动器缩放控制旋转
+
+制作一个缩放控制器，缩放控制器骨骼可以使目标骨骼进行旋转
+
+![图片](./Images/驱动器-缩放骨骼旋转-1.webp)
+
+```
+## 驱动器表达式
+(1-var)*pi
+
+## 数据路径
+pose.bones["骨骼名称"].scale.y
+```
 
 # <center>高级绑定课程笔记</center>
 
@@ -148,4 +161,6 @@ __多选__
    - <kbd>H</kbd>
 -  取消隐藏 
    - <kbd>Alt</kbd> + <kbd>H</kbd>
+
+
 
