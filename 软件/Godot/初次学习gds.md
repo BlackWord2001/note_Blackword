@@ -252,4 +252,68 @@ func _ready():
 
  这样最终输出就为3，但是要注意他只是截断了小数点后面的数字，并不是四舍五入。所以就算输入的是3.9也只会得到3。
 
- 
+ ### Vector
+
+ 除了常见的int float bool string类型，还有我们在游戏引擎中常用的vector类，通常 Vector2 或 Vector2 用来表示一个位置坐标。
+
+ ```gds
+ var position = Vector3(3, -10, 5)
+ ```
+
+ 我们也可以修改 Vector3 中 xyz 中其中的值比如：
+
+ ```gds
+ extends Node
+
+func _ready():
+	var position = Vector3(3, -10, 5)
+	position.x += 2
+	print(position)
+ ```
+
+ ### 静态类型
+
+ 在godot中我们一般使用的变量类型都是动态的，引擎会根据我们的赋值或重新赋值来重新推断变量的类型。但是这样做就会导致性能的下降，所以在godot中我们可以可以像c/c++那些语言一样手动设置语言的类型，并且无法重新赋值为其他类型的变量。
+
+ ```gds
+ var damage: int = 15
+ ```
+
+ 或者可以使用自动推断类型但是推断出来的类型是静态的无法被改变。
+
+ ```gds
+ var damage := 15
+ ```
+
+如果我们尝试将 damage变量设置为比如字符串引擎就会报错。
+
+### @export
+
+当我们想要在godot引擎的检查器中编辑我们的变量可以在我们的变量前添加 `@export` 关键字
+
+![图像](./Images/gds基础学习_3.webp)
+
+code:
+
+```gds
+extends Node
+
+@export var damage: int = 15
+
+func _ready():
+	print(damage)
+```
+
+当程序运行时打印的结果就是我们在检查器中设置的数值
+
+![图像](./Images/gds基础学习_4.webp)
+
+## 常量
+
+凡是有阴就有阳，变量的反面就是常量。定义一个常量我们只需要 `const` 关键字，一般常量的名称使用全大写。
+
+```gds
+const GRAVITY = -9.81
+```
+
+当我们创建了这个常量就没办法像变量一样在程序运行途中来修改他。
