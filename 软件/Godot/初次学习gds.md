@@ -174,3 +174,82 @@ func _input(event):
 			print("你的生命值很健康!")
 ```
 
+## 变量2.0
+
+假如我们在if语句内部声明了一个变量，那么我们只能在if语句内部使用这个变量。这被称为作用域，是初学者常犯错误的一个地方。
+
+```gds
+func _ready():
+	if x > y:
+		var health = 100 #在if语句下创建的变量
+```
+
+如果我们想创建一个在任何地方使用的变量就需要把他放在顶部再任何函数之外，这样就是一个脚本范围内的变量，可以在脚本的任何位置调用。
+
+```gds
+extends Node
+
+var script_variable = 100 #在最上方创建变量
+
+func _ready():
+	pass
+```
+
+ 在gdscript中创建变量并不需要像c++一样提前写好类型，所有类型的统一创建方式就是通过"var"，如下我们创建了两个变量一个为bool类型一个为int类型。
+
+ ```gds
+ func _ready():
+	var godot_is_cool = true
+	var coolness = 9001
+ ```
+
+我们甚至能通过重新赋值来改变变量的类型
+
+ ```gds
+ func _ready():
+	var godot_is_cool = true
+	var coolness = 9001
+	coolness = true
+ ```
+
+ gds语言有四种类型的变量
+
+ bool：表示true和false
+
+ int：整数
+
+ float：浮点数
+
+ string：文本
+
+ ### 类型转换
+
+我们可以通过str函数把number转换成string类型然后加入text中
+
+ ```
+ extends Node
+
+func _ready():
+	var number = 42
+	var text = "Meaning of life: " + str(number)
+	print(text)
+ ```
+
+ 输出内容如下：
+ ```
+ Meaning of life: 42
+ ```
+
+ 或者我们也能把浮点数转换成整数
+
+ ```
+ extends Node
+
+func _ready():
+	var pi = 3.14
+	print(int(pi))
+ ```
+
+ 这样最终输出就为3，但是要注意他只是截断了小数点后面的数字，并不是四舍五入。所以就算输入的是3.9也只会得到3。
+
+ 
