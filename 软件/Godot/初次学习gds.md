@@ -317,3 +317,101 @@ const GRAVITY = -9.81
 ```
 
 当我们创建了这个常量就没办法像变量一样在程序运行途中来修改他。
+
+## 函数
+
+我们可以用 `func` 来创建一个名为“JUMP”的函数，然后再把上次绑定的空格键作为我们的触发方式来看看是否起效果。
+
+```gds
+extends Node
+
+func _input(event):
+	if event.is_action_pressed("my_action"):
+		jump()
+
+func jump():
+	print("JUMP!")
+```
+
+在代码中我们给函数提供的输入称为参数，输出称为返回值。如下代码我们要创建带两个参数的一个函数即我们想相加的数字，但函数其实并没有返回结果只是打印了他。
+
+```gds
+extends Node
+
+func _ready():
+	add(245, 111)
+
+func add(num1, num2):
+	var result = num1 + num2
+	print(result)
+```
+
+想要返回值的话我们只需要把 `print()` 替换成 `return` 就可以了，然后在`_ready` 函数中创建一个变量用来存储 `add()` 相加出来的值再传递给 `print()` 进行打印。
+
+```gds
+extends Node
+
+func _ready():
+	var result = add(245, 111)
+	print(result)
+
+func add(num1, num2):
+	var result = num1 + num2
+	return result
+```
+
+甚至还能套娃使用 `add()` 让自身相加，或者直接在 `print()` 中使用 `add()`。
+
+```gds
+var result = add(245, 111)
+result = add(result, 10)
+print(result)
+print(add(10, 10))
+```
+
+函数中的参数我们也可以像创建变量一样指定数据类型，如下
+
+```gds
+func add(num1: int, num2: int):
+	var result = num1 + num2
+	return result
+```
+
+我们甚至还能加上 `-> int` 来限制我们的返回值类型
+
+```gds
+func add(num1: int, num2: int) -> int:
+	var result = num1 + num2
+	return result
+```
+
+## 随机数
+
+我们可以使用 `randf()` 创建随机数，假设我们在写一套关于玩家掉落物概率的随机代码，判断当我们的随机生成的数值大于等于0.8的时候掉落的是稀有物品，否则则是普通物品。
+
+`randf()` 返回 0.0 和 1.0（包含）之间的随机浮点值，除了`randf()`还有`randi()` 如果你经常使用其他编程语言你可能已经发现了，f其实是float的缩小而i是int的缩写，不同的随机数函数可以指定生成不同的数据类型。
+
+```gds
+extends Node
+
+func _ready():
+	var roll = randf()
+	print(roll)
+	
+	if roll <= 0.8:
+		print("你获得了一件普通物品。")
+	else:
+		print("你获得了一件稀有物品！")
+```
+
+接下来我们要给随机数定一个随机范围，假如我要随机随机一名角色的身高我会使用140cm-210cm作为随机数生成的范围。
+
+`randi_range` 就是可以设置随机范围的随机数生成函数，括号中可以填两个参数前面的是最小值后面的是最大值。
+
+```gds
+extends Node
+
+func _ready():
+	var character_height = randi_range(140, 210)
+	print("你的身高是：" + str(character_height) + "cm。")
+```
