@@ -584,3 +584,101 @@ Boss: 100
 Dwayne: 999
 ```
 
+我们甚至还能嵌套使用字典
+```gd
+extends Node
+
+func _ready():
+	var players = {
+		"Crook": {"Level": 1, "Health": 80},
+		"Villain": {"Level": 1, "Health": 80},
+		"Boss": {"Level": 1, "Health": 80},
+	}
+	
+	print(players["Boss"]["Health"])
+```
+
+## 枚举
+
+假设我们要为游戏创建阵营分别为 `ALLY` `NEUTRAL` `ENEMY` ，然后再用if判断是否受到欢迎，如果是敌人就不欢迎，友军和中立一律为欢迎
+
+```gd
+extends Node
+
+enum Alignment {ALLY, NEUTRAL, ENEMY}
+
+var unit_alignment = Alignment.ALLY
+
+func _ready():
+	if unit_alignment == Alignment.ENEMY:
+		print("你不受欢迎")
+	else:
+		print("欢迎")
+```
+
+`unit_alignment` 变量目前还是属于gd语言中写死的状态，我们可以使用之前学到的 `@export` 设置成检查器可见。
+
+```gd
+@export var unit_alignment = Alignment.ALLY
+```
+或
+```gd
+@export var unit_alignment: Alignment
+```
+
+然后我们就能直接在引擎的检查器中选择选项了
+
+![图像](./Images/gds基础学习_7.webp)
+
+假如我们尝试直接打印输出枚举中的一个类型
+
+```gd
+extends Node
+
+enum Alignment {ALLY, NEUTRAL, ENEMY}
+
+func _ready():
+	print(Alignment.ENEMY)
+```
+
+最终输出会发现输出的是数字2，默认和数组一样是按照创建的顺序排列。
+
+```
+2
+```
+
+当然我们也可以手动给他赋值
+
+```gd
+extends Node
+
+enum Alignment {ALLY = 1, NEUTRAL = -1, ENEMY = 0}
+
+func _ready():
+	print(Alignment.NEUTRAL)
+```
+
+## Match
+
+Match语句类似于c++中的switch语句
+
+```gd
+extends Node
+
+enum Alignment {ALLY, NEUTRAL, ENEMY}
+
+@export var my_alignment: Alignment
+
+func _ready():
+	match my_alignment:
+		Alignment.ALLY:
+			print("Hello, friend!")
+		Alignment.NEUTRAL:
+			print("I come in piece")
+		Alignment.ENEMY:
+			print("TASTE MY WRATH!")
+		_: #当以上情况都不符合就执行这里
+			print("Who art thou?")
+```
+
+## 修改节点
