@@ -2,7 +2,7 @@
 
 和其他游戏引擎编程一样都有如下两个函数作为我们编写脚本的位置。
 
-```gds
+```gd
 extends Node
 
 # 当节点第一次进入场景树时调用。
@@ -21,7 +21,7 @@ func _process(delta):
 
 ![图像](./Images/gds基础学习_0.webp)
 
-```gds
+```gd
 extends Node
 
 # Called when the node enters the scene tree for the first time.
@@ -43,7 +43,7 @@ func _ready():
 
 然后回到我们的代码中
 
-```gds
+```gd
 extends Node
 
 func _ready():
@@ -66,7 +66,7 @@ func _input(event):
 
 我们可以创建一个变量对他进行运算，这和别的编程语言一样，最后我们再使用print打印结果。
 
-```gds
+```gd
 extends Node
 
 var health = 100
@@ -85,7 +85,7 @@ func _ready():
 
 假如我们正在制作一款游戏，每按下一次空格玩家生命值就会减少20。
 
-```gds
+```gd
 extends Node
 
 var health = 100
@@ -100,7 +100,7 @@ func _input(event):
 
 但是有一个问题当玩家的生命值会变为0后继续按空格生命值会变成负数，所以我们要解决这个问题。
 
-```gds
+```gd
 extends Node
 
 var health = 100
@@ -154,7 +154,7 @@ if x == y or y > z:
 else语句可以让我们实现条件为假时发生什么；
 而elif可以在if和else中间再添加判断条件来扩展我们的if。
 
-``` gds
+``` gd
 extends Node
 
 var health = 100
@@ -178,7 +178,7 @@ func _input(event):
 
 假如我们在if语句内部声明了一个变量，那么我们只能在if语句内部使用这个变量。这被称为作用域，是初学者常犯错误的一个地方。
 
-```gds
+```gd
 func _ready():
 	if x > y:
 		var health = 100 #在if语句下创建的变量
@@ -186,7 +186,7 @@ func _ready():
 
 如果我们想创建一个在任何地方使用的变量就需要把他放在顶部再任何函数之外，这样就是一个脚本范围内的变量，可以在脚本的任何位置调用。
 
-```gds
+```gd
 extends Node
 
 var script_variable = 100 #在最上方创建变量
@@ -197,7 +197,7 @@ func _ready():
 
  在gdscript中创建变量并不需要像c++一样提前写好类型，所有类型的统一创建方式就是通过"var"，如下我们创建了两个变量一个为bool类型一个为int类型。
 
- ```gds
+ ```gd
  func _ready():
 	var godot_is_cool = true
 	var coolness = 9001
@@ -205,7 +205,7 @@ func _ready():
 
 我们甚至能通过重新赋值来改变变量的类型
 
- ```gds
+ ```gd
  func _ready():
 	var godot_is_cool = true
 	var coolness = 9001
@@ -256,13 +256,13 @@ func _ready():
 
  除了常见的int float bool string类型，还有我们在游戏引擎中常用的vector类，通常 Vector2 或 Vector2 用来表示一个位置坐标。
 
- ```gds
+ ```gd
  var position = Vector3(3, -10, 5)
  ```
 
  我们也可以修改 Vector3 中 xyz 中其中的值比如：
 
- ```gds
+ ```gd
  extends Node
 
 func _ready():
@@ -275,13 +275,13 @@ func _ready():
 
  在godot中我们一般使用的变量类型都是动态的，引擎会根据我们的赋值或重新赋值来重新推断变量的类型。但是这样做就会导致性能的下降，所以在godot中我们可以可以像c/c++那些语言一样手动设置语言的类型，并且无法重新赋值为其他类型的变量。
 
- ```gds
+ ```gd
  var damage: int = 15
  ```
 
  或者可以使用自动推断类型但是推断出来的类型是静态的无法被改变。
 
- ```gds
+ ```gd
  var damage := 15
  ```
 
@@ -295,7 +295,7 @@ func _ready():
 
 code:
 
-```gds
+```gd
 extends Node
 
 @export var damage: int = 15
@@ -312,7 +312,7 @@ func _ready():
 
 凡是有阴就有阳，变量的反面就是常量。定义一个常量我们只需要 `const` 关键字，一般常量的名称使用全大写。
 
-```gds
+```gd
 const GRAVITY = -9.81
 ```
 
@@ -322,7 +322,7 @@ const GRAVITY = -9.81
 
 我们可以用 `func` 来创建一个名为“JUMP”的函数，然后再把上次绑定的空格键作为我们的触发方式来看看是否起效果。
 
-```gds
+```gd
 extends Node
 
 func _input(event):
@@ -335,7 +335,7 @@ func jump():
 
 在代码中我们给函数提供的输入称为参数，输出称为返回值。如下代码我们要创建带两个参数的一个函数即我们想相加的数字，但函数其实并没有返回结果只是打印了他。
 
-```gds
+```gd
 extends Node
 
 func _ready():
@@ -348,7 +348,7 @@ func add(num1, num2):
 
 想要返回值的话我们只需要把 `print()` 替换成 `return` 就可以了，然后在`_ready` 函数中创建一个变量用来存储 `add()` 相加出来的值再传递给 `print()` 进行打印。
 
-```gds
+```gd
 extends Node
 
 func _ready():
@@ -362,7 +362,7 @@ func add(num1, num2):
 
 甚至还能套娃使用 `add()` 让自身相加，或者直接在 `print()` 中使用 `add()`。
 
-```gds
+```gd
 var result = add(245, 111)
 result = add(result, 10)
 print(result)
@@ -371,7 +371,7 @@ print(add(10, 10))
 
 函数中的参数我们也可以像创建变量一样指定数据类型，如下
 
-```gds
+```gd
 func add(num1: int, num2: int):
 	var result = num1 + num2
 	return result
@@ -379,7 +379,7 @@ func add(num1: int, num2: int):
 
 我们甚至还能加上 `-> int` 来限制我们的返回值类型
 
-```gds
+```gd
 func add(num1: int, num2: int) -> int:
 	var result = num1 + num2
 	return result
@@ -391,7 +391,7 @@ func add(num1: int, num2: int) -> int:
 
 `randf()` 返回 0.0 和 1.0（包含）之间的随机浮点值，除了`randf()`还有`randi()` 如果你经常使用其他编程语言你可能已经发现了，f其实是float的缩小而i是int的缩写，不同的随机数函数可以指定生成不同的数据类型。
 
-```gds
+```gd
 extends Node
 
 func _ready():
@@ -408,10 +408,179 @@ func _ready():
 
 `randi_range` 就是可以设置随机范围的随机数生成函数，括号中可以填两个参数前面的是最小值后面的是最大值。
 
-```gds
+```gd
 extends Node
 
 func _ready():
 	var character_height = randi_range(140, 210)
 	print("你的身高是：" + str(character_height) + "cm。")
 ```
+
+## 引擎内文档
+
+godot引擎在引擎内置了文档，当你想查看某个引擎内置函数的使用方法的时候就可以长按 <kbd>Ctrl</kbd> + 鼠标左键单击跳转到相应的文档。
+
+![图像](./Images/gds基础学习_5.webp)
+
+我们就以之前使用的 `randi_range` 函数为例
+
+![图像](./Images/gds基础学习_6.webp)
+
+## 数组
+
+和其他语言不同 gdscript 可以支持数组中混合类型
+
+```gd
+var items = ["Potion", 3, 6]
+```
+
+当然我们也可以像创建变量一样规定数组的类型，就比如我们需要创建一个纯字符串的数组。
+
+```gd
+var items: Array[String] = ["Potion", "Feather", "Stolen harp"]
+```
+
+数组的访问访问顺序基本是所有语言通用的，从0开始数尝试打印出第一个元素和第三个
+
+```gd
+func _ready():
+	var items: Array[String] = ["Potion", "Feather", "Stolen harp"]
+	
+	print(items[0])
+	print(items[2])
+```
+
+我们也可以修改数组中的元素和添加删除数组中的元素。
+
+```gd
+extends Node
+
+func _ready():
+	var items: Array[String] = ["Potion", "Feather", "Stolen harp"]
+	
+	items[1] = "Smelly sock"
+	items[2] = "Staff"
+	
+	items.remove_at(1)
+	items.append("Overpowered sword")
+```
+
+## 循环
+
+循环允许我们重复代码多次，适合遍历数组中的所有元素。
+
+## for 循环
+
+我们可以使用for循环来遍历数组中的所有元素。
+
+```gd
+extends Node
+
+func _ready():
+	var items: Array[String] = ["Potion", "Feather", "Stolen harp"]
+	
+	for item in items:
+		print(item)
+```
+
+又或者只打印出数组中长度大于6个字符的元素'
+
+```gd
+extends Node
+
+func _ready():
+	var items: Array[String] = ["Potion", "Feather", "Stolen harp"]
+	
+	for item in items:
+		if item.length() > 6:
+			print(item)
+```
+
+我们还能创建运行特定次数的循环
+
+```
+for n in 8:
+	print(n)
+```
+
+## while 循环
+
+```gd
+extends Node
+
+func _ready():
+	var glass := 0.0
+	
+	while glass < 0.5:
+		glass += randf_range(0.01, 0.2)
+		print(glass)
+	print("杯子已经装满了一半")
+```
+
+如果我们想要提前结束循环就可以使用 `break` 或 `continue`，当我们glass大于0.2我们的循环就会提前结束。
+
+```gd
+extends Node
+
+func _ready():
+	var glass := 0.0
+	
+	while glass < 0.5:
+		glass += randf_range(0.01, 0.2)
+		print(glass)
+		
+		if glass > 0.2:
+			break
+		
+	print("杯子已经装满了一半")
+```
+
+## 字典
+
+```gd
+extends Node
+
+func _ready():
+	#创建字典
+	var players = {
+		"Crook":1,
+		"Villain":35,
+		"Boss":100
+	}
+	#打印字典中的元素
+	print(players["Villain"])
+
+```
+
+我们也可以修改或添加字典中的元素
+
+```gd
+extends Node
+
+func _ready():
+	#创建字典
+	var players = {
+		"Crook":1,
+		"Villain":35,
+		"Boss":100
+	}
+	
+	# 修改字典中的元素
+	players["Villain"] = 50
+	
+	# 添加元素
+	players["Dwayne"] = 999
+	
+	# 遍历字典
+	for username in players:
+		print(username + ": " + str(players[username]))
+```
+
+输出结果：
+```
+Crook: 1
+Villain: 50
+Boss: 100
+Dwayne: 999
+```
+
