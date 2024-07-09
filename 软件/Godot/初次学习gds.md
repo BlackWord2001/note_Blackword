@@ -681,4 +681,124 @@ func _ready():
 			print("Who art thou?")
 ```
 
-## 修改节点
+## 修改节点 2.0
+
+当我们拖动节点到代码编辑器内的时候会产生一段相对路径
+
+![图像](./Images/gds基础学习_8.webp)
+
+当然我们也可以将这个引用存储在一个变量中，操作方法和上面差不多同样是拖拽过去，但是释放的时候要按住 <kbd>Ctrl</kbd> 再释放；godot这样就会帮助我们直接创建一个变量。
+
+![图像](./Images/gds基础学习_9.webp)
+
+`@onready` 只是确保godot等待所有子节点都创建完毕再执行，这样我们就不会遇到任何问题。
+
+`$` 美元符号实际上是 `get_node` 函数的简写，实际上换成`get_node` 也是可以的。
+
+```gd
+@onready var weapon = get_node("Player/Weapon")
+```
+
+### 相对路径
+
+现在我们的路径使用的是相对路径，因为我们的脚本是添加再 `Main` 节点上的所以，他是从 `Main` 的下一层开始找。
+
+![图像](./Images/gds基础学习_10.webp)
+
+### 绝对路径
+
+我们也可以使用 `get_path()` 来获得我们的绝对路径
+
+```gd
+extends Node
+
+@onready var weapon = get_node("Player/Weapon")
+
+func _ready():
+	print(weapon.get_path())
+```
+
+控制台输出
+
+```
+/root/Main/Player/Weapon
+```
+
+## 更灵活
+
+以上的方法可能还不够灵活一但修改节点名称代码就会失效，而且最好只在我们想要访问的节点是当前工作节点的子节点时才使用路径。
+
+所以我们可以使用 `@export` 来引用节点
+
+```gd
+extends Node
+
+@export var my_node: Node
+
+func _ready():
+	pass
+```
+
+然后就能在godot的检查器中选择我们的节点了
+
+![图像](./Images/gds基础学习_11.webp)
+
+### 检查节点
+
+我们可以用if来判断我们选择的节点是否为 `Node2D` 节点类型
+
+```gd
+extends Node
+
+@export var my_node: Node
+
+func _ready():
+	if my_node is Node2D:
+		print("Is 2D!")
+```
+
+### 规定节点类型
+
+假设我们想让节点像变量的静态一样规定数据类型，也就是规定特定节点的类型那么我们可以把代码写成如下
+
+```gd
+@export var my_node: Sprite2D
+```
+
+现在我们只能分配精灵节点而无法选择其他类型的节点
+
+![图像](./Images/gds基础学习_12.webp)
+
+## 信号
+
+选中按钮切换到节点我们可以看到，右侧有很多自带的信号
+
+![图像](./Images/gds基础学习_13.webp)
+
+我们双击 `perssed()` 信号
+
+![图像](./Images/gds基础学习_14.webp)
+
+点击连接
+
+![图像](./Images/gds基础学习_15.webp)
+
+然后我们在代码中就能看到 `func _on_button_pressed():` 函数，点击左侧绿色的图标可以看到我们信号的来源等信息。
+
+![图像](./Images/gds基础学习_16.webp)
+
+我们在这个按钮的函数下打印些什么
+
+```gds
+extends Node
+
+func _ready():
+	pass
+
+func _on_button_pressed():
+	print("按钮被按下了")
+```
+
+然后运行程序点击窗口中的按钮就会输出 "按钮被按下了" 的提示。
+
+![图像](./Images/gds基础学习_17.webp)
