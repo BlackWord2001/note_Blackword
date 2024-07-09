@@ -1,3 +1,19 @@
+# 2.0新增重要功能
+
+## Drawing 绘画
+
+<kbd>Ctrl</kbd> <kbd>D</kbd> 对图片进行绘画标记
+
+## Grouping 分组
+<kbd>Ctrl</kbd> <kbd>G</kbd> 创建分组
+<kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>G</kbd> 取消分组
+
+## Hierarchy 层级
+
+<kbd>Ctrl</kbd> <kbd>J</kbd> 打开图层列表
+
+# 旧笔记（复制来的）
+
 控制（配合左键）
 
 窗口内鼠标左键　　　　　框选
