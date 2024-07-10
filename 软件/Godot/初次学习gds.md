@@ -802,3 +802,235 @@ func _on_button_pressed():
 然后运行程序点击窗口中的按钮就会输出 "按钮被按下了" 的提示。
 
 ![图像](./Images/gds基础学习_17.webp)
+
+
+我们添加一个 Timer 节点，并在检查器中把 Autostart 打开，然后添加Timer节点的 timeout信号。
+并填入如下代码
+
+```gd
+extends Node
+
+var xp := 0
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+```
+
+现在我们可以用 `signal` 创建一个其他节点可以连接的信号，我们可以把自己创建的这个leveled_up的信号给连接到其他节点，但是因为是演示所以我们就把他连接到main节点就好了。
+
+```gd
+extends Node
+
+signal leveled_up
+
+var xp := 0
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+```
+
+我们可以通过 `.emit` 发出信号
+
+```gd
+extends Node
+
+signal leveled_up
+
+var xp := 0
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+		# 发出 leveled_up 信号
+		leveled_up.emit()
+
+# 连接的leveled_up信号
+func _on_leveled_up():
+	print("DING")
+```
+
+输出结果
+
+```
+5
+10
+15
+20
+DING
+5
+10
+15
+```
+
+接下来我们要通过代码连接信号，所以第一步我们要在编辑器中断开 `_on_leveled_up` 的信号
+
+```gd
+signal leveled_up
+
+var xp := 0
+
+func _ready():
+	# 连接信号
+	leveled_up.connect(_on_leveled_up) # 注意函数名称后面没有括号
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+		# 发出 leveled_up 信号
+		leveled_up.emit()
+
+# 连接的leveled_up信号
+func _on_leveled_up():
+	print("DING")
+```
+
+输出结果
+
+```
+5
+10
+15
+20
+DING
+5
+10
+15
+```
+
+然后我们还能让信号传递一些比如等级或其他有用信息并打印它，比如这里我们就添加一个名为 `msg` 的变量来传递一些其他信息。
+
+```gd
+extends Node
+
+signal leveled_up(msg) # <-- 添加一个名为msg的变量用来传递信息
+
+var xp := 0
+
+func _ready():
+	# 连接信号
+	leveled_up.connect(_on_leveled_up)
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+		# 发出 leveled_up 信号
+		leveled_up.emit("GZ!") # <-- 这里相当于给msg赋值
+
+# 连接的leveled_up信号
+func _on_leveled_up(msg): # <-- 这里也填入msg
+	print(msg) # <-- 这里也填入msg
+```
+
+输出结果
+
+```
+5
+10
+15
+20
+GZ!
+```
+
+## Get/Set
+
+get 和 set 使我们能够在变量改变时候添加代码，这意味着我们可以做比如把一个值限制在某个范围内。
+或者发出一个信号，让代码的其他部分知道变量已更改。
+
+### Set
+
+对于此用途经常使用的例子是生命周值。
+
+```gd
+extends Node
+
+signal health_changed(new_health) # <-- 创建信号
+
+var health:= 100:
+	set(value):
+		health = clamp(value, 0, 100) # <-- 限制变量最小和最大范围
+		health_changed.emit(health) # <-- 发出信号
+		
+func _ready():
+	health = -150 # <-- 我们输入的生命值
+
+func _on_health_changed(new_health):
+	print(new_health) # <-- 最后打印出被限制转换后的生命
+```
+
+### Get
+
+Get 则更常用于转换值
+
+```gd
+extends Node
+
+var chance := 0.2
+
+var chance_pct: int:
+	get:
+		return chance * 100
+	set(value):
+		chance = float(value) / 100.0
+
+func _ready():
+	print(chance_pct)
+	chance_pct = 40
+	print(chance_pct)
+```
+
+## 类
+
+在写代码之前我们先创建一个 `Node` 节点，并命名为 `Character`，再为`Character`创建一个节点。
+
+![图像](./Images/gds基础学习_18.webp)
+
+我们的类就写成如下
+
+```gd
+class_name Character
+
+extends Node
+
+@export var profession: String # 设置角色职业
+@export var health: int # 设置角色生命值
+
+func die():
+	health = 0
+	print(profession + " 死了")
+```
+
+然后再我的的main.gd的脚本中写入
+
+```gd
+extends Node
+
+@export var character_to_kill: Character # 选择角色
+
+func _ready():
+	character_to_kill.die() # 杀死当前角色
+```
+
+接下来我们就可以从Main节点的检查器中选择一个我们要杀死的角色
+
+![图像](./Images/gds基础学习_19.webp)
+
+比如我选择的是骑士，那控制台提示的就是
+
+```
+骑士 死了
+```
+
+## 内部类
+
