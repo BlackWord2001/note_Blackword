@@ -1034,3 +1034,98 @@ func _ready():
 
 ## 内部类
 
+内部类就是存在于另一个类中的类，他们可以作为字典的良好替代方案，因为有时候使用起来更安全一些。
+
+为什么说比字典更安全，因为GDScript会识别出在Equipment类中有个weight这个变量，如果我们尝试访问不存在的东西，在游戏运行之前就会收到错误提示。
+而不仅仅是在代码运行到这一部分时候才出现，这就叫做类型安全。
+
+```gd
+class_name Character
+
+extends Node
+
+# 实列化类
+var chest := Equipment.new()
+var legs := Equipment.new()
+
+func _ready():
+	chest.armor = 20
+	print(chest.armor)
+	print(legs.weigth)
+
+# 创建内部类
+class Equipment:
+	# 盔甲
+	var armor := 10
+	# 重量
+	var weigth := 5
+```
+
+## 继承
+
+我们知道godot中所有节点都是类，并且我们可以通过脚本有效的创建自己的类，但我们还需要了解一件事以便理解godot是如何构建的，那就是继承。
+
+继承指的是从一个类派生出另一个类的能力，实际上我们已经这样做了。请注意我们的脚本中写着 `extends Node` 所以我们的脚本是从 `Node` 类派生出来的，这意味着 `Node` 类的所有函数和变量在我们脚本中也是可用的。
+
+Godot 有一种很好的可视化这种关系的方式，当我们添加新节点时我们可以看到节点是按层级组织在其他节点下的。这是因为这些节点从从最顶上的节点那里继承而来
+
+![图像](./Images/gds基础学习_20.webp)
+
+例如上图 `AnimatedSprite2D` `Camera2D` 都继承于 `Node2D` ，这是因为 `Node2D` 是 2D空间中所有存在事物的基础类。
+
+更酷的是，我们之前的创建的 `Character` 类也能在列表中找到，当我们定义 `Character` 的时候本质上是在定义一个新的节点类型，我们可以看到它继承自 `Node`。
+
+![图像](./Images/gds基础学习_21.webp)
+
+这就需要我们确保正在处理的内容继承或扩展正确的类，例如，如果我们正在制作一个控制玩家移动的脚本，首先添加一个 `CharacterBody2D` 节点，然后再添加脚本并命名为 `player.gd`。
+
+![图像](./Images/gds基础学习_22.webp)
+
+```
+extends CharacterBody2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+```
+
+新创建的脚本中我们可以看到这个脚本继承于 `CharacterBody2D` ，所以我们也可以访问它拥有的函数，比如速度 `velocity` 等。
+
+![图像](./Images/gds基础学习_23.webp)
+
+## 组合
+
+视频里没讲
+
+## 向下调用，向上发信号
+
+上方的节点是父节点下方的节点是子节点
+
+![图像](./Images/gds基础学习_24.webp)
+
+而该子节点可能也会有它的子节点，以此类推
+
+![图像](./Images/gds基础学习_25.webp)
+
+
+向下调用，向上发信号，的原则意味着节点可以调用层次结构下方节点上的函数，但反之则不行。
+
+相反，下方的节点应使用信号来传达某件事情已经发生，上方的节点可以选择性的连接到这些信号。
+
+![图像](./Images/gds基础学习_26.webp)
+
+但如果需要在同级的两个节点之间进行通信呢，这些同级节点被称为兄弟节点。在这种情况下，共同的父节点负责从一个兄弟节点连接信号到另一个兄弟节点上的函数，这通常在最开始的 `_ready` 函数上完成。
+
+![图像](./Images/gds基础学习_27.webp)
+
+## 风格
+
+代码风格请查看gdscript风格指南
+
+https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html
