@@ -802,3 +802,330 @@ func _on_button_pressed():
 然后运行程序点击窗口中的按钮就会输出 "按钮被按下了" 的提示。
 
 ![图像](./Images/gds基础学习_17.webp)
+
+
+我们添加一个 Timer 节点，并在检查器中把 Autostart 打开，然后添加Timer节点的 timeout信号。
+并填入如下代码
+
+```gd
+extends Node
+
+var xp := 0
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+```
+
+现在我们可以用 `signal` 创建一个其他节点可以连接的信号，我们可以把自己创建的这个leveled_up的信号给连接到其他节点，但是因为是演示所以我们就把他连接到main节点就好了。
+
+```gd
+extends Node
+
+signal leveled_up
+
+var xp := 0
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+```
+
+我们可以通过 `.emit` 发出信号
+
+```gd
+extends Node
+
+signal leveled_up
+
+var xp := 0
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+		# 发出 leveled_up 信号
+		leveled_up.emit()
+
+# 连接的leveled_up信号
+func _on_leveled_up():
+	print("DING")
+```
+
+输出结果
+
+```
+5
+10
+15
+20
+DING
+5
+10
+15
+```
+
+接下来我们要通过代码连接信号，所以第一步我们要在编辑器中断开 `_on_leveled_up` 的信号
+
+```gd
+signal leveled_up
+
+var xp := 0
+
+func _ready():
+	# 连接信号
+	leveled_up.connect(_on_leveled_up) # 注意函数名称后面没有括号
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+		# 发出 leveled_up 信号
+		leveled_up.emit()
+
+# 连接的leveled_up信号
+func _on_leveled_up():
+	print("DING")
+```
+
+输出结果
+
+```
+5
+10
+15
+20
+DING
+5
+10
+15
+```
+
+然后我们还能让信号传递一些比如等级或其他有用信息并打印它，比如这里我们就添加一个名为 `msg` 的变量来传递一些其他信息。
+
+```gd
+extends Node
+
+signal leveled_up(msg) # <-- 添加一个名为msg的变量用来传递信息
+
+var xp := 0
+
+func _ready():
+	# 连接信号
+	leveled_up.connect(_on_leveled_up)
+
+func _on_timer_timeout():
+	xp += 5
+	print(xp)
+	if xp >= 20:
+		xp = 0
+		# 发出 leveled_up 信号
+		leveled_up.emit("GZ!") # <-- 这里相当于给msg赋值
+
+# 连接的leveled_up信号
+func _on_leveled_up(msg): # <-- 这里也填入msg
+	print(msg) # <-- 这里也填入msg
+```
+
+输出结果
+
+```
+5
+10
+15
+20
+GZ!
+```
+
+## Get/Set
+
+get 和 set 使我们能够在变量改变时候添加代码，这意味着我们可以做比如把一个值限制在某个范围内。
+或者发出一个信号，让代码的其他部分知道变量已更改。
+
+### Set
+
+对于此用途经常使用的例子是生命周值。
+
+```gd
+extends Node
+
+signal health_changed(new_health) # <-- 创建信号
+
+var health:= 100:
+	set(value):
+		health = clamp(value, 0, 100) # <-- 限制变量最小和最大范围
+		health_changed.emit(health) # <-- 发出信号
+		
+func _ready():
+	health = -150 # <-- 我们输入的生命值
+
+func _on_health_changed(new_health):
+	print(new_health) # <-- 最后打印出被限制转换后的生命
+```
+
+### Get
+
+Get 则更常用于转换值
+
+```gd
+extends Node
+
+var chance := 0.2
+
+var chance_pct: int:
+	get:
+		return chance * 100
+	set(value):
+		chance = float(value) / 100.0
+
+func _ready():
+	print(chance_pct)
+	chance_pct = 40
+	print(chance_pct)
+```
+
+## 类
+
+在写代码之前我们先创建一个 `Node` 节点，并命名为 `Character`，再为`Character`创建一个节点。
+
+![图像](./Images/gds基础学习_18.webp)
+
+我们的类就写成如下
+
+```gd
+class_name Character
+
+extends Node
+
+@export var profession: String # 设置角色职业
+@export var health: int # 设置角色生命值
+
+func die():
+	health = 0
+	print(profession + " 死了")
+```
+
+然后再我的的main.gd的脚本中写入
+
+```gd
+extends Node
+
+@export var character_to_kill: Character # 选择角色
+
+func _ready():
+	character_to_kill.die() # 杀死当前角色
+```
+
+接下来我们就可以从Main节点的检查器中选择一个我们要杀死的角色
+
+![图像](./Images/gds基础学习_19.webp)
+
+比如我选择的是骑士，那控制台提示的就是
+
+```
+骑士 死了
+```
+
+## 内部类
+
+内部类就是存在于另一个类中的类，他们可以作为字典的良好替代方案，因为有时候使用起来更安全一些。
+
+为什么说比字典更安全，因为GDScript会识别出在Equipment类中有个weight这个变量，如果我们尝试访问不存在的东西，在游戏运行之前就会收到错误提示。
+而不仅仅是在代码运行到这一部分时候才出现，这就叫做类型安全。
+
+```gd
+class_name Character
+
+extends Node
+
+# 实列化类
+var chest := Equipment.new()
+var legs := Equipment.new()
+
+func _ready():
+	chest.armor = 20
+	print(chest.armor)
+	print(legs.weigth)
+
+# 创建内部类
+class Equipment:
+	# 盔甲
+	var armor := 10
+	# 重量
+	var weigth := 5
+```
+
+## 继承
+
+我们知道godot中所有节点都是类，并且我们可以通过脚本有效的创建自己的类，但我们还需要了解一件事以便理解godot是如何构建的，那就是继承。
+
+继承指的是从一个类派生出另一个类的能力，实际上我们已经这样做了。请注意我们的脚本中写着 `extends Node` 所以我们的脚本是从 `Node` 类派生出来的，这意味着 `Node` 类的所有函数和变量在我们脚本中也是可用的。
+
+Godot 有一种很好的可视化这种关系的方式，当我们添加新节点时我们可以看到节点是按层级组织在其他节点下的。这是因为这些节点从从最顶上的节点那里继承而来
+
+![图像](./Images/gds基础学习_20.webp)
+
+例如上图 `AnimatedSprite2D` `Camera2D` 都继承于 `Node2D` ，这是因为 `Node2D` 是 2D空间中所有存在事物的基础类。
+
+更酷的是，我们之前的创建的 `Character` 类也能在列表中找到，当我们定义 `Character` 的时候本质上是在定义一个新的节点类型，我们可以看到它继承自 `Node`。
+
+![图像](./Images/gds基础学习_21.webp)
+
+这就需要我们确保正在处理的内容继承或扩展正确的类，例如，如果我们正在制作一个控制玩家移动的脚本，首先添加一个 `CharacterBody2D` 节点，然后再添加脚本并命名为 `player.gd`。
+
+![图像](./Images/gds基础学习_22.webp)
+
+```
+extends CharacterBody2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+```
+
+新创建的脚本中我们可以看到这个脚本继承于 `CharacterBody2D` ，所以我们也可以访问它拥有的函数，比如速度 `velocity` 等。
+
+![图像](./Images/gds基础学习_23.webp)
+
+## 组合
+
+视频里没讲
+
+## 向下调用，向上发信号
+
+上方的节点是父节点下方的节点是子节点
+
+![图像](./Images/gds基础学习_24.webp)
+
+而该子节点可能也会有它的子节点，以此类推
+
+![图像](./Images/gds基础学习_25.webp)
+
+
+向下调用，向上发信号，的原则意味着节点可以调用层次结构下方节点上的函数，但反之则不行。
+
+相反，下方的节点应使用信号来传达某件事情已经发生，上方的节点可以选择性的连接到这些信号。
+
+![图像](./Images/gds基础学习_26.webp)
+
+但如果需要在同级的两个节点之间进行通信呢，这些同级节点被称为兄弟节点。在这种情况下，共同的父节点负责从一个兄弟节点连接信号到另一个兄弟节点上的函数，这通常在最开始的 `_ready` 函数上完成。
+
+![图像](./Images/gds基础学习_27.webp)
+
+## 风格
+
+代码风格请查看gdscript风格指南
+
+https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html
