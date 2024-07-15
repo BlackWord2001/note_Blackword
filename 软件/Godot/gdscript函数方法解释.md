@@ -45,3 +45,14 @@ if condition1 and condition2:
 
 在 Godot 中，_input(event) 函数用于处理所有输入事件。与 _unhandled_input(event) 不同，_input(event) 会在输入事件传递到节点树的每个节点时被调用。你可以在这个函数中处理各种输入事件，例如键盘、鼠标和触摸事件。
 
+## clamp()
+
+● Variant clamp(value: Variant, min: Variant, max: Variant)
+
+钳制 value，返回不小于 min 且不大于 max 的 Variant。任何能够用小于和大于运算符进行比较的值都能工作。
+
+var a = clamp(-10, -1, 5)
+a 是 -1
+
+var b = clamp(8.1, 0.9, 5.5)
+b 是 5.5
