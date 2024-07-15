@@ -277,11 +277,33 @@ git push -u --force origin master
 ~~~
 请注意，这将删除所有提交历史记录，并且您将无法恢复它们。因此，请确保在执行此操作之前备份您的代码。
 
-## 仓库地址变动
-~~~shell
-git remote rm origin  #删除关联的origin的远程库
-git remote add origin <remote repository URL> #添加远程仓库地址
-~~~
+## 仓库地址变动，修改url
+
+方法1
+
+```shell
+git remote -v                       // 查看git对应的远程仓库地址
+git remote rm origin                // 删除关联对应的远程仓库地址
+git remote -v                       // 查看是否删除成功，如果没有任何返回结果，表示OK
+git remote add origin "新的仓库地址" // 重新关联git远程仓库地址
+
+```
+
+方法2（推荐）
+
+```shell
+git remote  					 		   // 查看远程仓库名称：origin 
+git remote get-url origin                  // 查看远程仓库地址
+git remote set-url origin "新的仓库地址"    // ( 如果未设置ssh-key，此处仓库地址为 http://... 开头)
+
+```
+
+方法3
+ ```shell
+ cd .git      // 进入.git目录
+vim config   // 修改config配置文件，快速找到remote "origin"下面的url并替换即可实现快速关联和修改
+ ``` 
+
 # 常见错误
 
 ### ❌`git add .` 出现错误
