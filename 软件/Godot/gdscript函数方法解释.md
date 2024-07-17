@@ -19,6 +19,14 @@ var my_variable = 10
 
 # 运算符
 
+## !取反
+
+`!`  是 逻辑非 的意思。它用于将布尔值取反，即如果原始值为 true，则取反后为 false，反之亦然。
+
+```
+is_crouching = !is_crouching
+```
+
 ## is and or
 
 is 运算符：
