@@ -83,3 +83,15 @@ a 是 -1
 
 var b = clamp(8.1, 0.9, 5.5)
 b 是 5.5
+
+## play()
+
+● void play(name: StringName = "", custom_blend: float = -1, custom_speed: float = 1.0, from_end: bool = false)
+
+播放键名为 name 的动画。可以设置自定义混合时间和速度。
+
+from_end 选项仅在切换到新的动画轨道，或在相同轨道的开始或结束时生效。它不影响在动画被中途暂停时恢复播放。如果 custom_speed 为负，且 from_end 为 true，则动画将向后播放（相当于调用 play_backwards()）。
+
+AnimationPlayer 使用 assigned_animation 跟踪其当前或上次播放的动画。如果使用相同的动画 name 或没有 name 参数调用此方法，则分配的动画将在暂停时恢复播放。
+
+注意：动画将在下次处理 AnimationPlayer 时更新。如果在调用该方法的同时更新了其他变量，则它们可能更新得太早。要立即执行更新，请调用 advance(0)。
