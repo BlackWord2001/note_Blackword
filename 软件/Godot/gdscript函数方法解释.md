@@ -95,3 +95,12 @@ from_end 选项仅在切换到新的动画轨道，或在相同轨道的开始�
 AnimationPlayer 使用 assigned_animation 跟踪其当前或上次播放的动画。如果使用相同的动画 name 或没有 name 参数调用此方法，则分配的动画将在暂停时恢复播放。
 
 注意：动画将在下次处理 AnimationPlayer 时更新。如果在调用该方法的同时更新了其他变量，则它们可能更新得太早。要立即执行更新，请调用 advance(0)。
+
+## _draw()
+
+在 Godot 中，`_draw()` 函数用于自定义绘图。它允许你在 2D 节点（如 Control 或 Node2D）上绘制自定义图形和形状。通过重载 `_draw()` 函数，你可以使用各种绘图命令来绘制特定的内容，例如线条、矩形、圆形等。
+
+``` gd
+func _draw():
+    draw_circle(Vector2(100, 100), 50, Color(1, 0, 0))
+```
