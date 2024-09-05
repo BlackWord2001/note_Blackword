@@ -8,6 +8,12 @@
 |<kbd>Alt</kbd> | 1. 长按Alt可以批量编辑如多个物体参数
 |<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>LMB</kbd> | 当很多物体重叠时可以通过这个菜单选择光标附近的物体
 
+## 编辑模式
+
+|快捷键|功能名称
+|:---|:---
+|<kbd>Ctrl</kbd> + <kbd>Alt</kbd> | 并排边选择
+
 ## 节点编辑器(Shader Editor)快捷键
 > 部分功能需要使用`node Wrangler`插件。
 > LMB(鼠标左键)，RMB(鼠标右键)，MMB（鼠标中键）
