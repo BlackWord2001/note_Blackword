@@ -40,6 +40,62 @@ git lfs clone
 git lfs pull
 ~~~
 
+## 删除本地 Git LFS 文件
+
+摘自：https://zhuanlan.zhihu.com/p/146683392
+官方手册：https://github.com/git-lfs/git-lfs/blob/6340befc60876f4f039f215479d9d5a945f817e1/docs/man/git-lfs-prune.adoc#L4
+
+你可以使用 git lfs prune 命令从本地 Git LFS 缓存中删除文件：
+
+```shell
+$ git lfs prune
+✔ 4 local objects, 33 retained
+Pruning 4 files, (2.1 MB)
+✔ Deleted 4 files
+```
+
+这将删除所有被认为是旧的本地 Git LFS 文件。 旧文件是以下未被引用的任何文件：
+
++ 当前检出的提交
++ 尚未推送（到 origin，或任何 lfs.pruneremotetocheck 设置的）的提交
++ 最近一次提交
+
+默认情况下，最近的提交是最近十天内创建的任何提交。 通过添加以下内容计算得出：
+
++ 获取额外的 Git LFS 历史记录中讨论的 lfs.fetchrecentrefsdays 属性的值（默认为 7）； 至
++ lfs.pruneoffsetdays 属性的值（默认为 3）
+
+![iamge](./Images/git_lfs_1.png)
+
+你可以配置 prune 偏移量以将 Git LFS 内容保留更长的时间：
+
+```shell
+# don't prune commits younger than four weeks (7 + 21)
+$ git config lfs.pruneoffsetdays 21
+```
+
+与 Git 的内置垃圾收集不同，Git LFS 内容不会自动修剪，因此，定期运行 git lfs prune 命令是保持本地仓库大小减小的好主意。
+
+你可以使用 git lfs prune --dry-run 来测试修剪操作将产生什么效果：
+
+```shell
+$ git lfs prune --dry-run
+✔ 4 local objects, 33 retained
+4 files would be pruned (2.1 MB)
+```
+
+以及使用 git lfs prune --verbose --dry-run 命令精确查看哪些 Git LFS 对象将被修剪：
+
+```shell
+$ git lfs prune --dry-run --verbose
+✔ 4 local objects, 33 retained
+4 files would be pruned (2.1 MB)
+* 4a3a36141cdcbe2a17f7bcf1a161d3394cf435ac386d1bff70bd4dad6cd96c48 (2.0 MB)
+* 67ad640e562b99219111ed8941cb56a275ef8d43e67a3dac0027b4acd5de4a3e (6.3 KB)
+* 6f506528dbf04a97e84d90cc45840f4a8100389f570b67ac206ba802c5cb798f (1.7 MB)
+* a1d7f7cdd6dba7307b2bac2bcfa0973244688361a48d2cebe3f3bc30babcf1ab (615.7 KB)
+```
+
 ## .gitattributes
 `.gitattributes` 中 `-text` 就是表示这个文件不是文本文件。其余的就是告诉 Git 在处理 filter、diff、merge 时将 pbtxt 文件通过 LFS 的方式处理，打开 .gitconfig 可以看到相关命令的替换。
 
