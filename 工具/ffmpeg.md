@@ -50,3 +50,10 @@ ffmpeg -i Desktop/1.mov -b:v 1.5M  Desktop/1.mp4
 - -b:v :指定视频的码率
 - -b:a : 指定音频的码率
 - 1.5M：码率的值 1.5M 表示 1.5Mb/s
+
+## 制作gif
+~~~shell
+ffmpeg -i 切片1.mp4 -vf "fps=15,scale=480:-1:flags=lanczos" -c:v gif 切片1.gif
+
+ffmpeg -i input.mp4 -vf "fps=30,scale=480:-1:flags=lanczos" -c:v gif -preset veryslow -b:v 3M -tune animation -movflags +faststart output.gif
+~~~
