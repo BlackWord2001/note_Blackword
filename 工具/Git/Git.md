@@ -255,6 +255,17 @@ Git提供了一个**git stash 命令**恰好可以完美解决该问题, 其将�
 
 /build/   #忽略build下所有的文件
 ```
+### 如果文件已经被 add 或者 commit 则不会被忽略
+
+如果你的 .gitignore 文件是后添加的，但 Git 仍然跟踪了本应被忽略的文件，可能是因为这些文件已经被 Git 追踪（即之前已经被 git add 或 commit 过）。.gitignore 只对未被 Git 追踪的文件生效，已经追踪的文件不会被忽略，即使后来添加到 .gitignore 中。
+
+或者直接移除所有已被跟踪但应该被忽略的文件：
+```bash
+git rm --cached -r .
+
+git add .
+git commit -m "停止追踪被 .gitignore 忽略的文件"
+```
 
 ## 设置代理
 
