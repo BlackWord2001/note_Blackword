@@ -12,8 +12,13 @@
 <kbd>Ctrl</kbd> + <kbd>Enter</kbd>|在下面插入行
 <kbd>Ctrl</kbd> + <kbd>123</kbd>|切换代码窗口
 <kbd>Ctrl</kbd> + <kbd>G</kbd>|跳转到指定行
-<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓/↑</kbd>| 上下复制行
+<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>↓/↑</kbd>| 上下移动
 <kbd>Ctrl</kbd> + <kbd>K</kbd> + <kbd>F</kbd> | 格式化选中部分文档
 <kbd>Ctrl</kbd> + <kbd>Space</kbd> | 显示建议
 <kbd>Ctrl</kbd> + <kbd>Alt</kbd>/<kbd>A</kbd>| 切换块注释
 <kbd>Ctrl</kbd> + <kbd>/</kbd> | 切换行注释
+<kbd>Ctrl</kbd> + <kbd>D</kbd> | 向下复制
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd>| 折叠当前代码块
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd>| 折叠当前代码块
+<kbd>Ctrl</kbd> + <kbd>K</kbd> + <kbd>0</kbd> | 折叠所有子代码块‌
+<kbd>Ctrl</kbd> + <kbd>K</kbd> + <kbd>J</kbd> | 展开所有子代码块
