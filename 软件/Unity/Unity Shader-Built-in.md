@@ -42,3 +42,93 @@ void vert(inout appdata_full v, out Input o)
 float wave = sin(_Time.y * 5 + v.vertex.x * 10) * _WaveAmount;  
 v.vertex.y += wave;
 ```
+
+### 旋转UV
+```hlsl
+// 旋转uv函数
+float2 RotateUV(float2 uv, float rotation)
+{
+    float rad = rotation * UNITY_PI / 180.0;
+    float s = sin(rad);
+    float c = cos(rad);
+    float2 center = float2(0.5, 0.5);
+    uv -= center;
+    uv = float2(uv.x * c - uv.y * s, uv.x * s + uv.y * c);
+    uv += center;
+    return uv;
+}
+```
+
+使用方法：在片表面着色器中创建一个`mainUV`用来接受`RotateUV`函数的`uv`返回值
+
+```hlsl
+void surf(Input IN, inout SurfaceOutputStandard o)
+{
+    // 把旋转后的UV用单独的一个变量存储
+    float2 mainUV = IN.uv_MainTex;
+    mainUV = RotateUV(mainUV, _UVRotation);
+
+    // 最后把mainUV传递到需的地方
+    fixed4 c = tex2D(_MainTex, mainUV) * _Color; 
+    o.Albedo = c.rgb;
+}
+```
+
+### 旋转UV - 法线
+法线的uv旋转和一般普通color颜色旋转不一样，当UV旋转180度时，法线贴图的方向会反转，这是因为法线贴图存储的是切线空间中的方向向量。我们需要对法线本身进行反向旋转来补偿UV旋转带来的影响。
+
+```hlsl
+float3 RotateNormal(float3 normal, float rotation)
+{
+    // 1. 将角度转换为弧度
+    float rad = rotation * UNITY_PI / 180.0;
+    // 2. 计算正弦和余弦值
+    float s = sin(rad);
+    float c = cos(rad);
+    
+    // 创建旋转矩阵 (绕Z轴旋转)
+    float3x3 rotMatrix = float3x3(
+        c, -s, 0, // 第一行: X轴变换
+        s, c, 0,  // 第二行: Y轴变换
+        0, 0, 1   // 第三行: Z轴不变
+    );
+    // 4. 将法线与旋转矩阵相乘
+    return mul(rotMatrix, normal);
+}
+```
+
+表面着色器部分
+
+```hlsl
+void surf(Input IN, inout SurfaceOutputStandard o)
+{
+    //旋转后的uv传递
+    float2 mainUV = IN.uv_MainTex;
+    mainUV = RotateUV(mainUV, _UVRotation);
+
+    // 采样并应用法线贴图
+    half4 normalMap = tex2D(_BumpMap, mainUV);
+    half3 normal = UnpackScaleNormal(normalMap, _BumpScale);
+    
+    // 对法线贴图进行旋转补偿 - 新增
+    o.Normal = RotateNormal(normal, -_UVRotation);
+}
+```
+
+**为什么绕Z轴旋转？**
++ 在切线空间中，法线向量的Z分量指向表面法线方向
++ X和Y分量表示切线方向
++ UV旋转是在2D平面上进行的，对应的是绕Z轴(法线方向)的旋转
+
+**示例：180度旋转的情况**
+当 _UVRotation = 180 时：
+
++ 弧度值: 180 × π/180 = π
++ sin(π) = 0, cos(π) = -1
++ 旋转矩阵变为:
+```
+[-1  0  0]
+[ 0 -1  0]
+[ 0  0  1]
+```
+这将使法线的X和Y分量取反，正好补偿了UV旋转180度带来的影响
