@@ -132,3 +132,64 @@ void surf(Input IN, inout SurfaceOutputStandard o)
 [ 0  0  1]
 ```
 这将使法线的X和Y分量取反，正好补偿了UV旋转180度带来的影响
+
+### 视差高度纹理
+
+```hlsl
+// 陡峭视差映射函数（高质量）
+float2 SteepParallaxMapping(Input IN, float2 rotatedUV, float rotation)
+{
+    // 旋转视角方向以匹配UV旋转
+    float3 rotatedViewDir = RotateViewDir(IN.viewDir, rotation);
+    
+    // 计算每层深度
+    float layerDepth = 1.0 / _ParallaxSteps;
+
+    // 当前每层的深度
+    float currentLayerDepth = 0.0;
+
+    // 每层UV移动量
+    float2 P = rotatedViewDir.xy * _ParallaxStrength;
+    float2 deltaUV = P / _ParallaxSteps;
+    
+    //当前UV
+    float2 currentUV = rotatedUV;
+
+    // 从高度纹理采样当前深度
+    float currentDepthMapValue = tex2D(_ParallaxMap, currentUV).r;
+
+    //逐步追踪直到找到交点
+    [unroll(16)] // 部分展开循环以提高性能
+    for (int i = 0; i < _ParallaxSteps; i++)
+    {
+        if (currentLayerDepth > currentDepthMapValue)
+            break;
+
+        // 移动到下一层
+        currentUV -= deltaUV;
+        currentDepthMapValue = tex2Dlod(_ParallaxMap, float4(currentUV, 0, 0)).r;
+        currentLayerDepth += layerDepth;
+    }
+    return currentUV;
+}
+```
+
+其中的`RotateViewDir()`这个函数其实和之前的`RotateNormal()`旋转法线的函数是完全一样的，就只是换了个名称看起来更通用。
+
+```hlsl
+// 旋转视角方向
+float3 RotateViewDir(float3 viewDir, float rotation)
+{
+    float rad = rotation * UNITY_PI / 180.0;
+    float s = sin(rad);
+    float c = cos(rad);
+    
+    float3x3 rotMatrix = float3x3(
+        c, -s, 0,
+        s, c, 0,
+        0, 0, 1
+    );
+    
+    return mul(rotMatrix, viewDir);
+}
+```
