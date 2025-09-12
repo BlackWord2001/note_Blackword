@@ -193,3 +193,66 @@ float3 RotateViewDir(float3 viewDir, float rotation)
     return mul(rotMatrix, viewDir);
 }
 ```
+
+### 双面渲染
+
+```hlsl
+//始终启用双面渲染
+Cull Off
+
+CGPROGRAM
+```
+
+但双面渲染会导致法线出现问题所以我们要对代码做出一些修改
+
+不再手动干预法线方向，让Unity处理双面渲染的法线计算
+
+可以增加一个 `_BackfaceIntensity` 参数控制背面光照强度
+
+```hlsl
+Properties
+{
+    ...
+    
+    // 增加 BackfaceIntensity 参数控制背面光照强度
+    [Header(Double Sided Lighting)]
+    _BackfaceIntensity("Backface Light Intensity", Range(0,1)) = 0.5
+}
+
+SubShader
+{
+
+    Cull Off //始终启用双面渲染
+
+    CGPROGRAM
+    
+    struct Input
+    {
+        ...
+        
+        float faceSign : VFACE; // 使用VFACE语义自动检测正面和背面
+    };
+
+    half _BackfaceIntensity; // _BackfaceIntensity声明
+
+    ...
+
+    void surf(Input IN, inout SurfaceOutputStandard o)
+    {
+        ...
+
+        // 采样并应用法线贴图
+        half4 normalMap = tex2D(_BumpMap, IN.uv_MainTex);
+        o.Normal = UnpackScaleNormal(normalMap, _BumpScale);
+        
+        // 使用Unity内置的VFACE功能处理双面光照
+        // IN.faceSign将为正面返回1，背面返回-1
+        if (IN.faceSign < 0)
+        {
+            // 调整背面光照强度
+            o.Albedo *= _BackfaceIntensity;
+        }
+    }
+
+}
+```
