@@ -255,6 +255,7 @@ Git提供了一个**git stash 命令**恰好可以完美解决该问题, 其将�
 
 /build/   #忽略build下所有的文件
 ```
+
 ### 如果文件已经被 add 或者 commit 则不会被忽略
 
 如果你的 .gitignore 文件是后添加的，但 Git 仍然跟踪了本应被忽略的文件，可能是因为这些文件已经被 Git 追踪（即之前已经被 git add 或 commit 过）。.gitignore 只对未被 Git 追踪的文件生效，已经追踪的文件不会被忽略，即使后来添加到 .gitignore 中。
@@ -326,6 +327,28 @@ git remote set-url origin "新的仓库地址"    // ( 如果未设置ssh-key，
  cd .git      // 进入.git目录
 vim config   // 修改config配置文件，快速找到remote "origin"下面的url并替换即可实现快速关联和修改
  ``` 
+
+
+## skip worktree
+
+skip worktree 是 尽力保证你本地的文件内容
+
+### 使用场景
++ 当你有一个需要个性化配置的文件（如数据库配置），但不想提交这些更改
++ 当你在进行一些实验性修改，但不想影响正常的 Git 操作
+
+**使用方法如下**
+```shell
+git update-index --skip-worktree config/database.yml
+```
+
+
+**使用如下命令取消被跳过的文件**
+```shell
+git update-index --no-skip-worktree 文件
+```
+
+
 
 # 常见错误
 
@@ -410,8 +433,7 @@ git push -u origin master
 core.autocrlf是一个Git变量，用于处理行结束符。它可以设置为三个值：true、input和false。如果你在Windows上使用Git，可以将其设置为true，以便在签出代码时将LF转换为CRLF。如果你在Mac或Linux上使用Git，则可以将其设置为input，以便在签出代码时不进行自动转换。你可以使用以下命令来设置core.autocrlf：git config --global core.autocrlf true。
 `git config --global core.autocrlf true`
 
-# <center>仓库创建</center>
-
+## 仓库创建
 ## 从命令行创建一个新的仓库
 ~~~shell
 touch README.md
@@ -429,20 +451,20 @@ git remote add origin http://192.168.0.114:3000/JAZZ/ChenGuang.git
 git push -u origin main
 ~~~
 
-# 打包为zip和tar
+## 打包为zip和tar
 
 ~~~ shell
 // 打包master分支的所有文件
 git archive --format=zip --output master.zip master
 ~~~
 
-# Git reset和git revert的区别
+## Git reset和git revert的区别
 
 + git reset 是回滚到对应的commit-id，相当于是删除了commit-id以后的所有的提交，并且不会产生新的commit-id记录，如果要推送到远程服务器的话，需要强制推送-f
 
 + git revert 是反做撤销其中的commit-id，然后重新生成一个commit-id。本身不会对其他的提交commit-id产生影响，如果要推送到远程服务器的话，就是普通的操作git push就好了
 
-# 中文路径乱码或被数字代替
+## 中文路径乱码或被数字代替
 
 ~~~ shell
 git config --global core.quotepath false
@@ -452,7 +474,7 @@ git config --global core.quotepath false
 
 在某些操作系统或者终端环境中，如果文件名包含非ASCII字符或特殊字符，Git可能会自动对这些字符进行URL编码，这可能会导致问题。例如，在Windows系统中，如果文件名包含空格或引号，这些字符在Git中可能被错误地处理。设置core.quotePath为false可以避免这个问题。
 
-# git删除工作区非暂存的文件
+## git删除工作区非暂存的文件
 
 要在Git工作区删除未暂存的文件，可以使用gitclean命令。这个命令会将所有未跟踪的
 文件和目录（即工作区中存在但不在暂存区和Git目录中的文件）删除。
