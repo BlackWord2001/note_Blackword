@@ -511,3 +511,16 @@ git clean -f -e .idea
 ```bash
 git clean -f -i
 ```
+
+## 长路径支持
+
+当你操作git遇到如下报错
+
+    error: unable to create file Assets/Magic Light Probes/Editor/Scene Data/Light Intensity VS Accurate Shadows/Accurate Shadows C/GeometryIntersectionsData/Accurate Shadows C_vol_0_GeometryIntersectionsData.mlpdat: Filename too long
+
+这是一个典型的 Windows 系统文件名长度限制问题。Git 在 Windows 上默认有 260 个字符的文件路径限制。
+
+启用 Git 长路径支持
+```shell
+git config --global core.longpaths true
+```
