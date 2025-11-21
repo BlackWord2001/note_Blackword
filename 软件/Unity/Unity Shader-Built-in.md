@@ -1,4 +1,39 @@
 > ⚠️以下内容部分为ai生成不一定完全准确
+## 数学函数
+
+**算法表格**
+
+shaderlab/hlsl中常见的数学函数
+
+中文名 | 函数 | 功能 | 常见应用场景
+:---: | :---: | :--- | :---
+None | `step()` | 硬过渡，二值化 | 卡通渲染边缘 (Toon Shading)、基于阈值的遮罩、颜色替换。
+None | `frac()` | 取小数部分、周期性 | UV 纹理平铺、程序化噪音和波浪的重复、动画的循环计时器。
+正弦函数 | `sin()` | 计算输入值的正弦，返回 [−1,1] 范围内的平滑周期值。 | 生成平滑的、来回摆动的变化（振荡）。它通常用于模拟波浪、呼吸效果、脉冲光照或任何需要平滑循环运动的场景。
+余弦函数 | `cos()` | 计算输入值的余弦，返回 [−1,1] 范围内的平滑周期值（相位比 sin 提前 90∘）  | 用于平滑振荡效果；与 sin() 结合，共同实现圆周运动（如创建旋转的向量或偏移）。
+
+### `frac()`
+
+示例
+
+表达式|结果|解释
+:--- | :--- | :---
+frac(1.25)|0.25|1.25−floor(1.25)=1.25−1.0=0.25
+frac(3.0)|0.0|3.0−floor(3.0)=3.0−3.0=0.0
+frac(-2.7)|0.3|−2.7−floor(−2.7)=−2.7−(−3.0)=0.3
+frac(0.999)|0.999|0.999−floor(0.999)=0.999−0.0=0.999
+
+### `step()`
+
+示例
+
+表达式|结果|解释
+:--- | :--- | :---
+step(0.5, 0.2) | 0.0 | 0.2<0.5
+step(0.5, 0.5) | 1.0 | 0.5≥0.5
+step(0.5, 0.8) | 1.0 | 0.8≥0.5
+
+## 基础方法
 
 ### 使用顶点着色器
 
@@ -254,5 +289,187 @@ SubShader
         }
     }
 
+}
+```
+
+当然双面渲染还能制作成控制开关unity中有个这样的内置方法可以使用
+
+```hlsl
+Properties
+    {
+        [Header(Rendering Settings)]
+        // Off = 双面显示 (0), Front = 剔除正面 (1), Back = 剔除背面 (2)
+        [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull Mode", Float) = 0
+
+        ...
+    }
+
+    SubShader
+    {
+        // 关闭剔除
+        Cull [_Cull]
+
+        ...
+    }
+```
+
+这样在材质面板中就会出现一个下拉选框，可以选择 `正面剔除` `背面剔除` `不剔除` 三种模式
+
+## 实际案列
+
+### 条纹边界
+这个Shader的核心思想是利用世界空间坐标来生成一个跨越整个3D空间的连续条纹图案，并用它来混合两种颜色。这种方法确保了条纹在模型表面、甚至在不同模型的接缝处都是连续的。
+
+**1.概述 (Summary)**
+特性 | 说明
+:---: | :---
+Shader 名称 | Blackword-Shader/Blackword_Boundary 
+效果|在模型表面生成具有移动、密度的3D 连续条纹，通常用于表现物体边界或特殊视觉效果。
+渲染队列 | Transparent（透明）
+关键技术 | 利用世界坐标 (pos.x + pos.y + pos.z)  计算 3D 条纹，确保跨面连续性。
+
+**2.Properties（属性）**
+属性名 | 类型 | 描述 |默认值
+:---: | :---: | :--- | :---
+_BaseColor | Color | 基础颜色 (背景色) | (0, 0.5, 1, 0.2)
+_StripeColor | Color | 条纹颜色  | (0, 1, 1, 1)
+_StripeDensity | Float | 条纹密度 (相当于 Tiling/平铺次数) | 5.0 
+_StripeWidth | Range(0, 1) | 条纹宽度 (0-1 之间)  | 0.5 
+
+**3.Rendering Settings (渲染设置)**
+
+属性名 | 类型 | 描述 | 默认值
+:---: | :---: | :--- | :---
+_Cull | Enum | 剔除模式：Off (双面显示)、Front (剔除正面)、Back (剔除背面) | 0 (Off) 
+
+**4.SubShader 核心设置**
+
+设置项 | 值 | 目的/说明
+:---: | :--- | :---
+Tags| "Queue"="Transparent" "RenderType"="Transparent" "IgnoreProjector"="True" | 强制在透明物体队列中渲染，并且忽略投影机（Projector）的影响。
+Blend | SrcAlpha OneMinusSrcAlpha | 开启标准的Alpha 混合（透明度混合）。
+ZWrite | Off |关闭深度写入，这是渲染透明物体时的标准做法，防止错误地遮挡后面的物体。
+Cull | [_Cull] | 根据用户设置的 _Cull 属性进行面片剔除。
+
+**源码**
+
+```hlsl
+Shader "Blackword-Shader/Blackword_Boundary"
+{
+    Properties
+    {
+        [Header(Rendering Settings)]
+        // Off = 双面显示 (0), Front = 剔除正面 (1), Back = 剔除背面 (2)
+        [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull Mode", Float) = 0
+        
+        [Header(Color)]
+        _BaseColor ("Base Color (Background)", Color) = (0, 0.5, 1, 0.2)
+        _StripeColor("Stripe Color", Color) = (0, 1, 1, 1)
+        
+        [Header(Stripe Settings)]
+        _StripeDensity ("Density (Tiling)", Float) = 5.0
+        _StripeWidth("Stripe Width (0-1)", Range(0, 1)) = 0.5
+        
+        [Header(Options)]
+        _ScrollSpeed("Scroll Speed", Float) = 0.0
+    }
+    SubShader
+    {
+        // 关键设置：渲染队列设置为透明，忽略投影
+        Tags { "Queue"="Transparent" "RenderType"="Transparent" "IgnoreProjector"="True"}
+        LOD 100
+        
+        // 开启alpha混合
+        Blend SrcAlpha OneMinusSrcAlpha
+        
+        // 关闭深度写入
+        ZWrite Off
+        
+        // 关闭剔除
+        Cull [_Cull]
+        
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_fog
+
+            #include "UnityCG.cginc"
+
+            // 输入顶点数据
+            struct appdata
+            {
+                // 顶点位置
+                float4 vertex : POSITION;
+                // 顶点法线，用于计算世界法线
+                float3 normal : NORMAL; 
+            };
+
+            // 顶点着色器到片元着色器传递的数据
+            struct v2f
+            {
+                // 裁剪空间（屏幕）坐标
+                float4 vertex : SV_POSITION;
+                // 核心：传递世界坐标
+                float3 worldPos : TEXCOORD0;
+                // 核心：传递世界法线
+                float3 worldNormal : TEXCOORD1;
+                // 传递雾效坐标
+                UNITY_FOG_COORDS(2)
+            };
+            
+            float4 _BaseColor;
+            float4 _StripeColor;
+            float _StripeDensity;
+            float _StripeWidth;
+            float _ScrollSpeed;
+
+            // 顶点着色器
+            v2f vert (appdata v)
+            {
+                v2f o;
+                // 将顶点位置从模型空间转换到裁剪空间
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                
+                // 将模型空间坐标转换到世界空间，并传递给片元着色器
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+
+                // 将模型空间法线转换到世界空间
+                o.worldNormal = UnityObjectToWorldNormal(v.normal);
+                
+                UNITY_TRANSFER_FOG(o,o.vertex);
+                return o;
+            }
+
+            // 条纹函数
+            float GetStripePattern(float3 pos)
+            {
+                // 核心算法改为 (x + y + z)
+                // 这相当于定义了一组法线方向为 (1,1,1) 的 3D 平面切割物体
+                // 无论在哪个面，它们都是同一个数学函数计算出来的，因此在接缝处绝对连续
+                // 乘以 _StripeDensity 控制疏密，加上 _Time.y * _ScrollSpeed 实现随时间滚动
+                float val = (pos.x + pos.y + pos.z) * _StripeDensity + _Time.y * _ScrollSpeed;
+                // frac 取小数部分形成循环，Step 根据宽度截断形成的硬边
+                return step(_StripeWidth, frac(val));
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // 计算条纹: 使用传入的 i.worldPos 计算条纹图案
+                float stripePattern = GetStripePattern(i.worldPos);
+                
+                // 颜色混合: 使用 lerp (线性插值) 函数，根据 stripePattern 的值 (0 或 1) 来混合 _BaseColor 和 _StripeColor
+                fixed4 col = lerp(_BaseColor, _StripeColor, stripePattern);
+                
+                // 应用雾效: 应用 Unity 内置的雾效
+                UNITY_APPLY_FOG(i.fogCoord, col);
+                
+                // 返回最终颜色
+                return col;
+            }
+            ENDCG
+        }
+    }
 }
 ```
