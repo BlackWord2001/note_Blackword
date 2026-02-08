@@ -12,6 +12,7 @@
 点积 | `dot()` | 计算两个向量的点积 (标量) | 漫反射光照计算 (Lambert)、视角边缘检测、判断物体朝向前后。
 最大值 | `max()` | 取两个值中的较大值 | 避免光照为负数 (max(dot(N,L), 0) )、下限控制。
 最小值 | `min()` | 取两个值中的较小值 | 雾效距离上限控制、上限控制。
+矩阵乘法 | `mul()` | 矩阵与向量的乘法运算 | 顶点着色器中的坐标空间变换（如模型到世界、世界到观察、观察到裁剪）
 
 ## step 阶梯函数
 
@@ -171,6 +172,17 @@ float2 vec2 = float2(2.0, 1.0);
 float2 result3 = min(vec1, vec2); // (1.0, 1.0)
 ```
 
+## mul
+
+空间变换链
+```hlsl
+// 完整的坐标空间变换流程
+float4 worldPos = mul(unity_ObjectToWorld, v.vertex);      // 模型→世界
+float4 viewPos = mul(UNITY_MATRIX_V, worldPos);           // 世界→观察  
+float4 clipPos = mul(UNITY_MATRIX_P, viewPos);            // 观察→裁剪
+```
+
+`mul()`函数是Unity Shader编程中最核心的数学函数之一，负责所有的线性变换操作
 
 ---
 
